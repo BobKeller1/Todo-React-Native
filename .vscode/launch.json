@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug iOS Hermes",
+      "preLaunchTask": "${defaultBuildTask}",
+      "cwd": "${workspaceFolder}",
+      "type": "reactnativedirect",
+      "request": "launch",
+      "platform": "ios",
+    },
+    {
+      "name": "Run iOS Hermes",
+      "preLaunchTask": "${defaultBuildTask}",
+      "cwd": "${workspaceFolder}",
+      "type": "reactnativedirect",
+      "request": "launch",
+      "platform": "ios",
+      "enableDebug": false
+    }
+  ]
+}
