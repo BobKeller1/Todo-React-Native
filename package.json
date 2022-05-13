@@ -10,7 +10,7 @@
     "install-pods": "cd ios && bundler exec pod install --repo-update && cd ..",
     "bootstrap": "yarn install && yarn install-gems && yarn install-pods",
     "clean": "git clean -xdf",
-    "open": "open ios/MyApp.xcworkspace",
+    "open": "open ios/TodoApp.xcworkspace",
     "project": "react-native run-ios",
     "prettier": "prettier --write app",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
