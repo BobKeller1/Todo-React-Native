@@ -1,26 +1,54 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 
 const styles = StyleSheet.create({
-  TextWrapper: {
-    textAlign: 'center',
-    marginTop: 30,
+  todoItem: {
+    maxWidth: 370,
+    height: 84,
+    padding: 10,
   },
-  BoldText: {
-    fontWeight: 'bold',
+  container: {
+    padding: 13,
+    flexDirection: "row"
   },
-  RedText: {
-    color: 'red',
+  mainContainer: {
+    flex: 0.7,
+  },
+  sideContainer: {
+    flex: 0.3,
+  },
+  title: {
+    fontFamily: 'Proxima Nova',
+    fontSize: 16,
+    lineHeight: 20,
+    textAlign: 'left',
+    textAlignVertical: 'center',
+  },
+  description: {
+    fontFamily: 'Proxima Nova',
+    fontSize: 14,
+    lineHeight: 18,
+    textAlign: 'left',
+    textAlignVertical: 'center',
+    color: 'rgba(0,0,0,0.54)',
   },
 });
 
 const App = () => {
   return (
     <SafeAreaView>
-      <Text style={styles.TextWrapper}>
-        <Text style={styles.BoldText}>Hello</Text>,{' '}
-        <Text style={styles.RedText}>World!</Text>
-      </Text>
+      <View style={styles.todoItem}>
+        <View style={styles.container}>
+          <View style={styles.mainContainer}>
+            <Text style={styles.title}>Заголовок</Text>
+            <Text style={styles.description}>Описание</Text>
+          </View>
+          <View style={styles.sideContainer}>
+            <Text style={styles.title}>Не выполнена</Text>
+            <Text style={styles.description}>дата</Text>
+          </View>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
