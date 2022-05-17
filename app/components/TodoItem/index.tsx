@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 13,
+    paddingLeft: 25,
     flexDirection: 'column',
     flexWrap: 'wrap',
   },
@@ -54,7 +55,7 @@ interface TodoItemProps {
   description: string;
   status: boolean;
   date: string;
-  onPressHandler: () => void;
+  onPress: () => void;
 }
 
 const TodoItem: FC<TodoItemProps> = ({
@@ -62,7 +63,7 @@ const TodoItem: FC<TodoItemProps> = ({
   description,
   status,
   date,
-  onPressHandler,
+  onPress,
 }) => {
   const todoStatus = (
     <Text style={[styles.status, status && styles.statusCompleted]}>
@@ -72,7 +73,7 @@ const TodoItem: FC<TodoItemProps> = ({
 
   return (
     <View>
-      <TouchableOpacity onPress={() => onPressHandler()}>
+      <TouchableOpacity onPress={() => onPress()}>
         <View style={styles.container}>
           <View style={styles.mainContainer}>
             <Text style={[status && styles.textCompleted, styles.title]}>
@@ -84,7 +85,9 @@ const TodoItem: FC<TodoItemProps> = ({
           </View>
           <View style={styles.sideContainer}>
             {todoStatus}
-            <Text style={styles.date}>{date}</Text>
+            <Text style={styles.date}>
+              {new Date(+date).toLocaleString('ru-RU')}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
