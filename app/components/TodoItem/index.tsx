@@ -1,97 +1,25 @@
 import React, {FC} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-
-const styles = StyleSheet.create({
-  todoItem: {
-    height: 84,
-    padding: 10,
-  },
-  todoItemCompleted: {
-    color: 'rgba(0,0,0,0.15)',
-  },
-  container: {
-    padding: 13,
-    paddingLeft: 25,
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-  },
-  mainContainer: {
-    flexGrow: 1,
-    marginBottom: 10,
-  },
-  sideContainer: {
-    flexDirection: 'column',
-  },
-  title: {
-    fontSize: 16,
-    lineHeight: 20,
-  },
-  description: {
-    fontSize: 14,
-    lineHeight: 18,
-    color: 'rgba(0,0,0,0.54)',
-  },
-  textCompleted: {
-    textDecorationLine: 'line-through',
-    color: 'rgba(0,0,0,0.24)',
-  },
-  status: {
-    fontSize: 12,
-    lineHeight: 16,
-    color: 'rgba(0,0,0,0.54)',
-  },
-  statusCompleted: {
-    color: 'green',
-  },
-  date: {
-    fontSize: 12,
-    lineHeight: 16,
-    color: 'rgba(0,0,0,0.54)',
-  },
-});
+import {ITodoItem} from '../../App';
+import List from '../UI/List';
+import {dateFormatter} from '../../../formatters/dateFormatters';
 
 interface TodoItemProps {
-  title: string;
-  description: string;
-  status: boolean;
-  date: string;
+  item: ITodoItem;
   onPress: () => void;
 }
 
-const TodoItem: FC<TodoItemProps> = ({
-  title,
-  description,
-  status,
-  date,
-  onPress,
-}) => {
-  const todoStatus = (
-    <Text style={[styles.status, status && styles.statusCompleted]}>
-      {status ? 'Выполнено' : 'Не выполнено'}
-    </Text>
-  );
+const TodoItem: FC<TodoItemProps> = ({item, onPress}) => {
+  const {status, description, title, date} = item;
+  const formattedDate = dateFormatter(date);
 
   return (
-    <View>
-      <TouchableOpacity onPress={() => onPress()}>
-        <View style={styles.container}>
-          <View style={styles.mainContainer}>
-            <Text style={[status && styles.textCompleted, styles.title]}>
-              {title}
-            </Text>
-            <Text style={[styles.description, status && styles.textCompleted]}>
-              {description}
-            </Text>
-          </View>
-          <View style={styles.sideContainer}>
-            {todoStatus}
-            <Text style={styles.date}>
-              {new Date(+date).toLocaleString('ru-RU')}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </View>
+    <List
+      title={title}
+      description={description}
+      date={formattedDate}
+      onPress={onPress}
+      status={status}
+    />
   );
 };
 
