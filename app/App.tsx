@@ -4,6 +4,9 @@ import TodoList from './components/TodoList';
 import SectionedTodoList from './components/SectionedTodoList';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   inputContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -95,7 +98,7 @@ const App = () => {
   );
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
           value={searchQuery}

@@ -4,6 +4,9 @@ import {ITodoItem} from '../../App';
 import TodoItem from '../TodoItem';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   emptyElementContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -47,7 +50,7 @@ const TodoList: FC<TodoListProps> = ({data, searchQuery, onPress}) => {
   }, []);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.container}>
       <FlatList
         data={todosFiltredList}
         renderItem={renderItem}
