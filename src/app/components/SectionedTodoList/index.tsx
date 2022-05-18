@@ -1,15 +1,10 @@
 import React, {FC, useMemo} from 'react';
-import {
-  ListRenderItem,
-  SectionList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {ListRenderItem, StyleSheet, Text, View} from 'react-native';
 import {dateFormatter} from '../../../formatters/dateFormatters';
 import {ITodoItem} from '../../App';
 import TodoItem from '../TodoItem';
 import {groupBy} from '../../../utils/arrayUtils';
+import {KeyboardAwareSectionList} from 'react-native-keyboard-aware-scroll-view';
 
 const styles = StyleSheet.create({
   sectionHeader: {
@@ -48,7 +43,7 @@ const SectionedTodoList: FC<SectionedTodoListProps> = ({data, onPress}) => {
 
   return (
     <View style={{flex: 1}}>
-      <SectionList
+      <KeyboardAwareSectionList
         sections={groupedTodo}
         renderItem={renderItem}
         keyExtractor={item => item.id}

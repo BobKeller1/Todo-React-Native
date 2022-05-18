@@ -12,12 +12,13 @@
     "clean": "git clean -xdf",
     "open": "open ios/TodoApp.xcworkspace",
     "project": "react-native run-ios",
-    "prettier": "prettier --write app",
+    "prettier": "prettier --write src/app",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "react": "17.0.2",
-    "react-native": "0.68.2"
+    "react-native": "0.68.2",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

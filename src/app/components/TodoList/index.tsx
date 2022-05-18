@@ -1,7 +1,8 @@
 import React, {FC, useCallback, useMemo} from 'react';
-import {FlatList, ListRenderItem, StyleSheet, Text, View} from 'react-native';
+import {ListRenderItem, StyleSheet, Text, View} from 'react-native';
 import {ITodoItem} from '../../App';
 import TodoItem from '../TodoItem';
+import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,10 +52,11 @@ const TodoList: FC<TodoListProps> = ({data, searchQuery, onPress}) => {
 
   return (
     <View style={styles.container}>
-      <FlatList
+      <KeyboardAwareFlatList
         data={todosFiltredList}
         renderItem={renderItem}
         keyExtractor={item => item.id}
+        contentContainerStyle={{flexGrow: 1}}
         ItemSeparatorComponent={FlatListItemSeparator}
         ListFooterComponent={
           todosFiltredList.length !== 0 ? FlatListItemSeparator : null
