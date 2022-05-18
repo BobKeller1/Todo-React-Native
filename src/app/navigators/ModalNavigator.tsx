@@ -6,7 +6,11 @@ const ModalStack = createNativeStackNavigator();
 const ModalNavigator = () => {
   return (
     <ModalStack.Navigator>
-      <ModalStack.Screen name={'ModalScreen'} component={ModalScreen} />
+      <ModalStack.Screen
+        name={'ModalScreen'}
+        component={ModalScreen}
+        options={{headerShown: false}}
+      />
     </ModalStack.Navigator>
   );
 };

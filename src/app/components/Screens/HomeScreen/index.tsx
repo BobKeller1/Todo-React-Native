@@ -36,34 +36,6 @@ const HomeScreen = () => {
   const data: ITodoItem[] = useMemo(
     () => [
       {
-        title: 'todo title 0',
-        description: 'description 0',
-        status: false,
-        date: '1652207435533',
-        id: '10',
-      },
-      {
-        title: 'todo title 0',
-        description: 'description 0',
-        status: false,
-        date: '1652207435533',
-        id: '11',
-      },
-      {
-        title: 'todo title 0',
-        description: 'description 0',
-        status: false,
-        date: '1652207435533',
-        id: '111',
-      },
-      {
-        title: 'todo title 0',
-        description: 'description 0',
-        status: false,
-        date: '1652207435533',
-        id: '123',
-      },
-      {
         title: 'todo title PPP 1',
         description: 'description 1',
         status: true,
@@ -90,6 +62,27 @@ const HomeScreen = () => {
         status: true,
         date: '1752701435134',
         id: '4',
+      },
+      {
+        title: 'todo title ABC 4',
+        description: 'description 4',
+        status: true,
+        date: '1752701435134',
+        id: '5',
+      },
+      {
+        title: 'todo title ABC 4',
+        description: 'description 4',
+        status: true,
+        date: '1752701435134',
+        id: '6',
+      },
+      {
+        title: 'todo title ABC 4',
+        description: 'description 4',
+        status: true,
+        date: '1752731435134',
+        id: '8',
       },
     ],
     [],

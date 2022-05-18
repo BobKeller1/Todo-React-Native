@@ -28,7 +28,9 @@ const SectionedTodoList: FC<SectionedTodoListProps> = ({data, onPress}) => {
     return <TodoItem item={item} onPress={onPress} />;
   };
 
-  const groupedByDate = groupBy(data, item => item.date);
+  const groupedByDate = groupBy(data, item =>
+    dateFormatter(item.date, true, ',', 0),
+  );
 
   const groupedTodo = useMemo(
     () =>
@@ -48,9 +50,7 @@ const SectionedTodoList: FC<SectionedTodoListProps> = ({data, onPress}) => {
         renderItem={renderItem}
         keyExtractor={item => item.id}
         renderSectionHeader={({section: {title}}) => (
-          <Text style={styles.sectionHeader}>
-            {dateFormatter(title, true, ',', 0)}
-          </Text>
+          <Text style={styles.sectionHeader}>{title}</Text>
         )}
       />
     </View>
