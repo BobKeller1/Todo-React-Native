@@ -1,5 +1,4 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeStackScreen from './components/Screens/HomeStackScreen';
@@ -19,8 +18,8 @@ const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={{headerShown: false}}>
-        <Tab.Screen name={'Home'} component={HomeStackScreen} />
-        <Tab.Screen name={'Settings'} component={SettingsStackScreen} />
+        <Tab.Screen name={'HomeScreen'} component={HomeStackScreen} />
+        <Tab.Screen name={'SettingsScreen'} component={SettingsStackScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
