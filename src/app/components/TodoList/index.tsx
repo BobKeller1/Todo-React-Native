@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#000',
   },
+  listContainer: {flexGrow: 1},
 });
 
 interface TodoListProps {
@@ -56,7 +57,7 @@ const TodoList: FC<TodoListProps> = ({data, searchQuery, onPress}) => {
         data={todosFiltredList}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        contentContainerStyle={{flexGrow: 1}}
+        contentContainerStyle={styles.listContainer}
         ItemSeparatorComponent={FlatListItemSeparator}
         ListFooterComponent={
           todosFiltredList.length !== 0 ? FlatListItemSeparator : null
