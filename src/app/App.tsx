@@ -1,7 +1,8 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
-import HomeScreen from './components/Screens/HomeScreen';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import HomeStackScreen from './components/Screens/HomeStackScreen';
+import SettingsStackScreen from './components/Screens/SettingsStackScreen';
 
 export interface ITodoItem {
   title: string;
@@ -11,22 +12,15 @@ export interface ITodoItem {
   status: boolean;
 }
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name={'Home'}
-          component={HomeScreen}
-          options={{
-            headerStyle: {
-              backgroundColor: '#b9b8b8',
-            },
-          }}
-        />
-      </Stack.Navigator>
+      <Tab.Navigator screenOptions={{headerShown: false}}>
+        <Tab.Screen name={'HomeScreen'} component={HomeStackScreen} />
+        <Tab.Screen name={'SettingsScreen'} component={SettingsStackScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };
