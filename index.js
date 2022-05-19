@@ -1,10 +1,10 @@
 import {AppRegistry} from 'react-native';
-import App from './app/App';
 import {name as appName} from './app.json';
+import App from './src/app/App';
 import {
   globalStylesText,
   globalStylesTouchableOpacity,
-} from './utils/globalStyles';
+} from './src/utils/globalStyles';
 
 globalStylesText();
 globalStylesTouchableOpacity();

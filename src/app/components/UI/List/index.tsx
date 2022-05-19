@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 13,
+    paddingLeft: 25,
     flexDirection: 'column',
     flexWrap: 'wrap',
   },
@@ -49,30 +50,18 @@ const styles = StyleSheet.create({
   },
 });
 
-interface TodoItemProps {
+interface ListProps {
   title: string;
   description: string;
   status: boolean;
   date: string;
-  onPressHandler: () => void;
+  onPress: () => void;
 }
 
-const TodoItem: FC<TodoItemProps> = ({
-  title,
-  description,
-  status,
-  date,
-  onPressHandler,
-}) => {
-  const todoStatus = (
-    <Text style={[styles.status, status && styles.statusCompleted]}>
-      {status ? 'Выполнено' : 'Не выполнено'}
-    </Text>
-  );
-
+const List: FC<ListProps> = ({title, description, status, date, onPress}) => {
   return (
     <View>
-      <TouchableOpacity onPress={() => onPressHandler()}>
+      <TouchableOpacity onPress={onPress}>
         <View style={styles.container}>
           <View style={styles.mainContainer}>
             <Text style={[status && styles.textCompleted, styles.title]}>
@@ -83,7 +72,9 @@ const TodoItem: FC<TodoItemProps> = ({
             </Text>
           </View>
           <View style={styles.sideContainer}>
-            {todoStatus}
+            <Text style={[styles.status, status && styles.statusCompleted]}>
+              {status ? 'Выполнено' : 'Не выполнено'}
+            </Text>
             <Text style={styles.date}>{date}</Text>
           </View>
         </View>
@@ -92,4 +83,4 @@ const TodoItem: FC<TodoItemProps> = ({
   );
 };
 
-export default TodoItem;
+export default List;
