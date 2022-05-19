@@ -1,6 +1,5 @@
 import React, {useLayoutEffect, useMemo, useState} from 'react';
-import SafeAreaView from 'react-native-safe-area-view';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, View, SafeAreaView} from 'react-native';
 import TodoList from '../../TodoList';
 import SectionedTodoList from '../../SectionedTodoList';
 import {ITodoItem} from '../../../App';
