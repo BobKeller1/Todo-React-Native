@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useLayoutEffect, useMemo, useState} from 'react';
 import SafeAreaView from 'react-native-safe-area-view';
 import {StyleSheet, TextInput, View} from 'react-native';
 import TodoList from '../../TodoList';
@@ -7,6 +7,9 @@ import {ITodoItem} from '../../../App';
 import {useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   inputContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -29,7 +32,7 @@ const HomeScreen = () => {
   const onPress = () => console.log('pressed');
   const navigation = useNavigation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({title: 'Главный экран'});
   }, [navigation]);
 
@@ -95,7 +98,7 @@ const HomeScreen = () => {
     [],
   );
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
           value={searchQuery}
