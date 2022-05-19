@@ -1,12 +1,15 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useLayoutEffect, useMemo, useState} from 'react';
 import SafeAreaView from 'react-native-safe-area-view';
-import {Button, StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, View} from 'react-native';
 import TodoList from '../../TodoList';
 import SectionedTodoList from '../../SectionedTodoList';
 import {ITodoItem} from '../../../App';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   inputContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -27,14 +30,42 @@ const styles = StyleSheet.create({
 const HomeScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const onPress = () => console.log('pressed');
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useNavigation();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({title: 'Главный экран'});
   }, [navigation]);
 
   const data: ITodoItem[] = useMemo(
     () => [
+      {
+        title: 'todo title 0',
+        description: 'description 0',
+        status: false,
+        date: '1652207435533',
+        id: '10',
+      },
+      {
+        title: 'todo title 0',
+        description: 'description 0',
+        status: false,
+        date: '1652207435533',
+        id: '11',
+      },
+      {
+        title: 'todo title 0',
+        description: 'description 0',
+        status: false,
+        date: '1652207435533',
+        id: '111',
+      },
+      {
+        title: 'todo title 0',
+        description: 'description 0',
+        status: false,
+        date: '1652207435533',
+        id: '123',
+      },
       {
         title: 'todo title PPP 1',
         description: 'description 1',
@@ -63,36 +94,11 @@ const HomeScreen = () => {
         date: '1752701435134',
         id: '4',
       },
-      {
-        title: 'todo title ABC 4',
-        description: 'description 4',
-        status: true,
-        date: '1752701435134',
-        id: '5',
-      },
-      {
-        title: 'todo title ABC 4',
-        description: 'description 4',
-        status: true,
-        date: '1752701435134',
-        id: '6',
-      },
-      {
-        title: 'todo title ABC 4',
-        description: 'description 4',
-        status: true,
-        date: '1752731435134',
-        id: '8',
-      },
     ],
     [],
   );
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <Button
-        title={'Open modal'}
-        onPress={() => navigation.navigate('Modal')}
-      />
+    <SafeAreaView style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
           value={searchQuery}
