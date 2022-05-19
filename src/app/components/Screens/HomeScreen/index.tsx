@@ -1,10 +1,10 @@
 import React, {useLayoutEffect, useMemo, useState} from 'react';
 import SafeAreaView from 'react-native-safe-area-view';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {Button, StyleSheet, TextInput, View} from 'react-native';
 import TodoList from '../../TodoList';
 import SectionedTodoList from '../../SectionedTodoList';
 import {ITodoItem} from '../../../App';
-import {useNavigation} from '@react-navigation/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 const HomeScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const onPress = () => console.log('pressed');
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<any>>();
 
   useLayoutEffect(() => {
     navigation.setOptions({title: 'Главный экран'});
@@ -99,6 +99,10 @@ const HomeScreen = () => {
   );
   return (
     <SafeAreaView style={styles.container}>
+      <Button
+        title={'Open modal'}
+        onPress={() => navigation.navigate('Modal')}
+      />
       <View style={styles.inputContainer}>
         <TextInput
           value={searchQuery}
