@@ -12,11 +12,11 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		402CDE1DE4234B4BBE454145 /* ProximaNovaBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C329280860E4DACA4318B4A /* ProximaNovaBlack.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-TodoApp-TodoAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-TodoApp-TodoAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		8995E75168434E48BCBD89E2 /* ProximaNovaBlack.otf in Resources */ = {isa = PBXBuildFile; fileRef = FFB9C9D055B2403787166B99 /* ProximaNovaBlack.otf */; };
-		974227B07E81429298AB21D7 /* ProximaNovaBlack.woff in Resources */ = {isa = PBXBuildFile; fileRef = A4BDED37D5FF4AB59E82D9CC /* ProximaNovaBlack.woff */; };
+		FA00FD9BA020432EA3F97303 /* ProximaNovaBlack.otf in Resources */ = {isa = PBXBuildFile; fileRef = 78815E46355C4BD09739BCC1 /* ProximaNovaBlack.otf */; };
+		E4619B15542E4F3CAA8A7671 /* ProximaNovaBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D1831E01E2054F678B036CED /* ProximaNovaBlack.ttf */; };
+		1AE3E6D92D5D480498DD101B /* ProximaNovaBlack.woff in Resources */ = {isa = PBXBuildFile; fileRef = D2BFA81B43174566A0D00761 /* ProximaNovaBlack.woff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,7 +33,6 @@
 		00E356EE1AD99517003FC87E /* TodoAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodoAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* TodoAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodoAppTests.m; sourceTree = "<group>"; };
-		0C329280860E4DACA4318B4A /* ProximaNovaBlack.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ProximaNovaBlack.ttf; path = ../assets/fonts/ProximaNovaBlack.ttf; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* TodoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = TodoApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = TodoApp/AppDelegate.mm; sourceTree = "<group>"; };
@@ -47,9 +46,10 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-TodoApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TodoApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TodoApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-TodoApp-TodoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoApp-TodoAppTests.release.xcconfig"; path = "Target Support Files/Pods-TodoApp-TodoAppTests/Pods-TodoApp-TodoAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		A4BDED37D5FF4AB59E82D9CC /* ProximaNovaBlack.woff */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ProximaNovaBlack.woff; path = ../assets/fonts/ProximaNovaBlack.woff; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		FFB9C9D055B2403787166B99 /* ProximaNovaBlack.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ProximaNovaBlack.otf; path = ../assets/fonts/ProximaNovaBlack.otf; sourceTree = "<group>"; };
+		78815E46355C4BD09739BCC1 /* ProximaNovaBlack.otf */ = {isa = PBXFileReference; name = "ProximaNovaBlack.otf"; path = "../src/assets/fonts/ProximaNovaBlack.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D1831E01E2054F678B036CED /* ProximaNovaBlack.ttf */ = {isa = PBXFileReference; name = "ProximaNovaBlack.ttf"; path = "../src/assets/fonts/ProximaNovaBlack.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D2BFA81B43174566A0D00761 /* ProximaNovaBlack.woff */ = {isa = PBXFileReference; name = "ProximaNovaBlack.woff"; path = "../src/assets/fonts/ProximaNovaBlack.woff"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,9 +105,9 @@
 		25F780DACD404C2390598D06 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0C329280860E4DACA4318B4A /* ProximaNovaBlack.ttf */,
-				A4BDED37D5FF4AB59E82D9CC /* ProximaNovaBlack.woff */,
-				FFB9C9D055B2403787166B99 /* ProximaNovaBlack.otf */,
+				78815E46355C4BD09739BCC1 /* ProximaNovaBlack.otf */,
+				D1831E01E2054F678B036CED /* ProximaNovaBlack.ttf */,
+				D2BFA81B43174566A0D00761 /* ProximaNovaBlack.woff */,
 			);
 			name = Resources;
 			path = "";
@@ -262,9 +262,9 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				402CDE1DE4234B4BBE454145 /* ProximaNovaBlack.ttf in Resources */,
-				974227B07E81429298AB21D7 /* ProximaNovaBlack.woff in Resources */,
-				8995E75168434E48BCBD89E2 /* ProximaNovaBlack.otf in Resources */,
+				FA00FD9BA020432EA3F97303 /* ProximaNovaBlack.otf in Resources */,
+				E4619B15542E4F3CAA8A7671 /* ProximaNovaBlack.ttf in Resources */,
+				1AE3E6D92D5D480498DD101B /* ProximaNovaBlack.woff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
