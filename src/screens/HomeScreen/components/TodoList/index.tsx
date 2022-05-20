@@ -1,7 +1,7 @@
 import React, {FC, useCallback, useMemo} from 'react';
 import {ListRenderItem, StyleSheet, Text, View} from 'react-native';
-import {ITodoItem} from '../../App';
-import TodoItem from '../TodoItem';
+import {ITodoItem} from '../../../../app/App';
+import TodoItem from '../../../../app/components/TodoItem';
 import {KeyboardAwareFlatList} from 'react-native-keyboard-aware-scroll-view';
 
 const styles = StyleSheet.create({

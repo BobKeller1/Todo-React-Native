@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import ModalScreen from '../components/Screens/ModalScreen';
+import ModalScreen from '../../../screens/ModalScreen';
 
 const ModalStack = createNativeStackNavigator();
 const ModalNavigator = () => {

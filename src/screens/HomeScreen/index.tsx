@@ -1,9 +1,8 @@
 import React, {useLayoutEffect, useMemo, useState} from 'react';
-import SafeAreaView from 'react-native-safe-area-view';
-import {Button, StyleSheet, TextInput, View} from 'react-native';
-import TodoList from '../../TodoList';
-import SectionedTodoList from '../../SectionedTodoList';
-import {ITodoItem} from '../../../App';
+import {Button, StyleSheet, TextInput, View, SafeAreaView} from 'react-native';
+import TodoList from './components/TodoList';
+import SectionedTodoList from './components/SectionedTodoList';
+import {ITodoItem} from '../../app/App';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({

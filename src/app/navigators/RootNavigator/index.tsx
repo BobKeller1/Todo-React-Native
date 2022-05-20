@@ -1,18 +1,18 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import ModalNavigator from './ModalNavigator';
-import TabBarNavigator from './TabBarNavigator';
+import ModalNavigator from '../ModalNavigator';
+import TabBarNavigator from '../TabBarNavigator';
 
-const MainStack = createNativeStackNavigator();
-const MainNavigator = () => {
+const RootStack = createNativeStackNavigator();
+const RootNavigator = () => {
   return (
-    <MainStack.Navigator>
-      <MainStack.Screen
+    <RootStack.Navigator>
+      <RootStack.Screen
         name="TabBarNavigator"
         component={TabBarNavigator}
         options={{headerShown: false}}
       />
-      <MainStack.Screen
+      <RootStack.Screen
         options={{
           presentation: 'modal',
           headerStyle: {
@@ -22,7 +22,7 @@ const MainNavigator = () => {
         name="Modal"
         component={ModalNavigator}
       />
-    </MainStack.Navigator>
+    </RootStack.Navigator>
   );
 };
-export default MainNavigator;
+export default RootNavigator;

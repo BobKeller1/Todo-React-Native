@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import MainNavigator from './navigators/MainNavigator';
+import RootNavigator from './navigators/RootNavigator';
 
 export interface ITodoItem {
   title: string;
@@ -13,7 +13,7 @@ export interface ITodoItem {
 const App = () => {
   return (
     <NavigationContainer>
-      <MainNavigator />
+      <RootNavigator />
     </NavigationContainer>
   );
 };
