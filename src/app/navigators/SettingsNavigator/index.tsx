@@ -1,14 +1,14 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import SettingsScreen from '../SettingsScreen/SettingsScreen';
+import SettingsScreen from '../../../screens/SettingsScreen/SettingsScreen';
 
 const SettingsStack = createNativeStackNavigator();
 
-const SettingsStackScreen = () => {
+const SettingsNavigator = () => {
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen
-        name={'Settings'}
+        name={'SettingsScreen'}
         component={SettingsScreen}
         options={{
           title: 'Настройки',
@@ -21,4 +21,4 @@ const SettingsStackScreen = () => {
   );
 };
 
-export default SettingsStackScreen;
+export default SettingsNavigator;

@@ -1,12 +1,15 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC, useCallback, useMemo} from 'react';
 import {ListRenderItem, StyleSheet, Text, View} from 'react-native';
-import {dateFormatter} from '../../../formatters/dateFormatters';
-import {ITodoItem} from '../../App';
-import TodoItem from '../TodoItem';
-import {groupBy} from '../../../utils/arrayUtils';
+import {dateFormatter} from '../../../../formatters/dateFormatters';
+import {ITodoItem} from '../../../../app/App';
+import TodoItem from '../../../../entities/TodoItem';
+import {groupBy} from '../../../../utils/arrayUtils';
 import {KeyboardAwareSectionList} from 'react-native-keyboard-aware-scroll-view';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   sectionHeader: {
     paddingTop: 2,
     paddingLeft: 15,
@@ -20,15 +23,22 @@ const styles = StyleSheet.create({
 
 interface SectionedTodoListProps {
   data: ITodoItem[];
-  onPress: () => void;
+  onPress: (todoId: string) => void;
 }
 
 const SectionedTodoList: FC<SectionedTodoListProps> = ({data, onPress}) => {
   const renderItem: ListRenderItem<ITodoItem> = ({item}) => {
-    return <TodoItem item={item} onPress={onPress} />;
+    return <TodoItem item={item} onPress={() => onPress(item.id)} />;
   };
 
-  const groupedByDate = groupBy(data, item => item.date);
+  const sectionHeader = useCallback(({section: {title}}) => {
+    return <Text style={styles.sectionHeader}>{title}</Text>;
+  }, []);
+
+  const groupedByDate = useMemo(
+    () => groupBy(data, item => dateFormatter(item.date, true, ',', 0)),
+    [data],
+  );
 
   const groupedTodo = useMemo(
     () =>
@@ -42,16 +52,13 @@ const SectionedTodoList: FC<SectionedTodoListProps> = ({data, onPress}) => {
   );
 
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.container}>
       <KeyboardAwareSectionList
         sections={groupedTodo}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        renderSectionHeader={({section: {title}}) => (
-          <Text style={styles.sectionHeader}>
-            {dateFormatter(title, true, ',', 0)}
-          </Text>
-        )}
+        renderSectionHeader={sectionHeader}
+        extraData={onPress}
       />
     </View>
   );

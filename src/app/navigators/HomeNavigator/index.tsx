@@ -1,14 +1,14 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import HomeScreen from '../HomeScreen';
+import HomeScreen from '../../../screens/HomeScreen';
 
 const HomeStack = createNativeStackNavigator();
 
-const HomeStackScreen = () => {
+const HomeNavigator = () => {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
-        name={'Home'}
+        name={'HomeScreen'}
         component={HomeScreen}
         options={{
           title: 'Главная страница',
@@ -21,4 +21,4 @@ const HomeStackScreen = () => {
   );
 };
 
-export default HomeStackScreen;
+export default HomeNavigator;
