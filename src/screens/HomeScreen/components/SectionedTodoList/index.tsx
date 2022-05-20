@@ -2,7 +2,7 @@ import React, {FC, useCallback, useMemo} from 'react';
 import {ListRenderItem, StyleSheet, Text, View} from 'react-native';
 import {dateFormatter} from '../../../../formatters/dateFormatters';
 import {ITodoItem} from '../../../../app/App';
-import TodoItem from '../../../../app/components/TodoItem';
+import TodoItem from '../../../../entities/TodoItem';
 import {groupBy} from '../../../../utils/arrayUtils';
 import {KeyboardAwareSectionList} from 'react-native-keyboard-aware-scroll-view';
 
