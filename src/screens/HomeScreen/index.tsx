@@ -1,5 +1,12 @@
 import React, {useLayoutEffect, useMemo, useState} from 'react';
-import {Button, StyleSheet, TextInput, View, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import TodoList from './components/TodoList';
 import SectionedTodoList from './components/SectionedTodoList';
 import {ITodoItem} from '../../app/App';
@@ -8,6 +15,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -23,6 +31,35 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     borderRadius: 10,
     backgroundColor: 'rgba(250, 250, 250, 0.93);',
+  },
+  buttonAddTaskContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: 60,
+    height: 60,
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    borderRadius: 100,
+    borderColor: '#268CC7',
+    backgroundColor: '#268CC7',
+    borderWidth: 1,
+  },
+  buttonAddTask: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: 60,
+    height: 60,
+    paddingVertical: 9,
+    paddingHorizontal: 16,
+    borderRadius: 100,
+    borderColor: '#268CC7',
+    backgroundColor: '#268CC7',
+    borderWidth: 1,
+  },
+  buttonText: {
+    fontSize: 30,
+    color: 'white',
   },
 });
 
@@ -50,6 +87,48 @@ const HomeScreen = () => {
         date: '1652207435533',
         id: '111',
       },
+      {
+        title: 'todo title 0',
+        description: 'description 0',
+        status: false,
+        date: '1652207435533',
+        id: '12',
+      },
+      {
+        title: 'todo title 0',
+        description: 'description 0',
+        status: false,
+        date: '1652207435533',
+        id: '13',
+      },
+      {
+        title: 'todo title 0',
+        description: 'description 0',
+        status: true,
+        date: '1652207435533',
+        id: '14',
+      },
+      {
+        title: 'todo title 0',
+        description: 'description 0',
+        status: false,
+        date: '1652207435533',
+        id: '15',
+      },
+      {
+        title: 'todo title 0',
+        description: 'description 0',
+        status: false,
+        date: '1652207435533',
+        id: '16',
+      },
+      {
+        title: 'todo title 0',
+        description: 'description 0',
+        status: true,
+        date: '1652207435533',
+        id: '17',
+      },
     ],
     [],
   );
@@ -71,11 +150,6 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Button
-        title={'Open modal'}
-        onPress={() => navigation.navigate('Modal')}
-      />
-
       <View style={styles.inputContainer}>
         <TextInput
           value={searchQuery}
@@ -93,6 +167,13 @@ const HomeScreen = () => {
       ) : (
         <SectionedTodoList data={todos} onPress={setComletedHandler} />
       )}
+      <View style={styles.buttonAddTaskContainer}>
+        <TouchableOpacity
+          style={styles.buttonAddTask}
+          onPress={() => navigation.navigate('Modal')}>
+          <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
