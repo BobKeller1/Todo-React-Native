@@ -75,6 +75,7 @@ const HomeScreen = () => {
         title={'Open modal'}
         onPress={() => navigation.navigate('Modal')}
       />
+
       <View style={styles.inputContainer}>
         <TextInput
           value={searchQuery}
