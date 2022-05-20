@@ -27,14 +27,6 @@ const styles = StyleSheet.create({
 });
 
 const HomeScreen = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const onPress = () => console.log('pressed');
-  const navigation = useNavigation<NavigationProp<any>>();
-
-  useLayoutEffect(() => {
-    navigation.setOptions({title: 'Главный экран'});
-  }, [navigation]);
-
   const data: ITodoItem[] = useMemo(
     () => [
       {
@@ -54,48 +46,29 @@ const HomeScreen = () => {
       {
         title: 'todo title 0',
         description: 'description 0',
-        status: false,
+        status: true,
         date: '1652207435533',
         id: '111',
-      },
-      {
-        title: 'todo title 0',
-        description: 'description 0',
-        status: false,
-        date: '1652207435533',
-        id: '123',
-      },
-      {
-        title: 'todo title PPP 1',
-        description: 'description 1',
-        status: true,
-        date: '1652201435533',
-        id: '1',
-      },
-      {
-        title: 'todo titlsse RRRR 2',
-        description: 'description 2',
-        status: false,
-        date: '1652201435533',
-        id: '2',
-      },
-      {
-        title: 'todo title DBS 3',
-        description: 'description 3',
-        status: false,
-        date: '1652307475737',
-        id: '3',
-      },
-      {
-        title: 'todo title ABC 4',
-        description: 'description 4',
-        status: true,
-        date: '1752701435134',
-        id: '4',
       },
     ],
     [],
   );
+  const [searchQuery, setSearchQuery] = useState('');
+  const [todos, setTodos] = useState(data);
+
+  const setComletedHandler = (todoId: string) => {
+    const index = data.findIndex(todo => todo.id === todoId);
+    const todoList = [...todos];
+    todoList[index].status = !todoList[index].status;
+    setTodos(todoList);
+  };
+
+  const navigation = useNavigation<NavigationProp<any>>();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({title: 'Главный экран'});
+  }, [navigation]);
+
   return (
     <SafeAreaView style={styles.container}>
       <Button
@@ -111,9 +84,13 @@ const HomeScreen = () => {
         />
       </View>
       {searchQuery ? (
-        <TodoList data={data} searchQuery={searchQuery} onPress={onPress} />
+        <TodoList
+          data={todos}
+          searchQuery={searchQuery}
+          onPress={setComletedHandler}
+        />
       ) : (
-        <SectionedTodoList data={data} onPress={onPress} />
+        <SectionedTodoList data={todos} onPress={setComletedHandler} />
       )}
     </SafeAreaView>
   );

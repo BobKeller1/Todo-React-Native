@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 interface TodoListProps {
   data: ITodoItem[];
   searchQuery: string;
-  onPress: () => void;
+  onPress: (todoId: string) => void;
 }
 
 const TodoList: FC<TodoListProps> = ({data, searchQuery, onPress}) => {
@@ -44,7 +44,7 @@ const TodoList: FC<TodoListProps> = ({data, searchQuery, onPress}) => {
   }, []);
 
   const renderItem: ListRenderItem<ITodoItem> = ({item}) => {
-    return <TodoItem item={item} onPress={onPress} />;
+    return <TodoItem item={item} onPress={() => onPress(item.id)} />;
   };
 
   const FlatListItemSeparator = useCallback(() => {
@@ -66,6 +66,7 @@ const TodoList: FC<TodoListProps> = ({data, searchQuery, onPress}) => {
           todosFiltredList.length !== 0 ? FlatListItemSeparator : null
         }
         ListEmptyComponent={FlatListEmptyElement}
+        extraData={onPress}
       />
     </View>
   );

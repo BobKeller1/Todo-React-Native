@@ -23,12 +23,12 @@ const styles = StyleSheet.create({
 
 interface SectionedTodoListProps {
   data: ITodoItem[];
-  onPress: () => void;
+  onPress: (todoId: string) => void;
 }
 
 const SectionedTodoList: FC<SectionedTodoListProps> = ({data, onPress}) => {
   const renderItem: ListRenderItem<ITodoItem> = ({item}) => {
-    return <TodoItem item={item} onPress={onPress} />;
+    return <TodoItem item={item} onPress={() => onPress(item.id)} />;
   };
 
   const sectionHeader = useCallback(({section: {title}}) => {
@@ -58,6 +58,7 @@ const SectionedTodoList: FC<SectionedTodoListProps> = ({data, onPress}) => {
         renderItem={renderItem}
         keyExtractor={item => item.id}
         renderSectionHeader={sectionHeader}
+        extraData={onPress}
       />
     </View>
   );
