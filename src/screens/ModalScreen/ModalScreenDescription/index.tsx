@@ -10,6 +10,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import useKeyboardHeight from '../../../hooks/useKeyboardHeight';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import CustomIcon from '../../../components/CustomIcon';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   input: {
-    height: 36,
+    height: 50,
     padding: 7,
     paddingLeft: 15,
     borderRadius: 10,
@@ -35,8 +36,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 60,
     right: 30,
-    width: 100,
-    height: 35,
+    width: 70,
+    height: 40,
     paddingTop: 9,
     paddingRight: 16,
     paddingBottom: 9,
@@ -96,7 +97,7 @@ const ModalScreenDescription = () => {
           },
         ]}>
         <TouchableOpacity onPress={() => navigation.push('ModalScreenDate')}>
-          <Text>Дальше</Text>
+          <CustomIcon name={'arrow-right2'} size={18} color={'#268CC7'} />
         </TouchableOpacity>
       </Animated.View>
     </View>

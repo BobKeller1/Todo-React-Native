@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   input: {
-    height: 36,
+    height: 50,
     padding: 7,
     paddingLeft: 15,
     borderRadius: 10,
@@ -35,14 +35,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 60,
     right: 30,
-    width: 100,
-    height: 35,
+    height: 40,
     paddingTop: 9,
     paddingRight: 16,
     paddingBottom: 9,
     paddingLeft: 16,
     borderRadius: 100,
-    borderColor: '#268CC7',
+    borderColor: 'green',
     borderWidth: 1,
   },
 });
@@ -96,7 +95,7 @@ const ModalScreenDate = () => {
           },
         ]}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Text>Дальше</Text>
+          <Text style={{color: 'green'}}>Создать задачу</Text>
         </TouchableOpacity>
       </Animated.View>
     </View>
