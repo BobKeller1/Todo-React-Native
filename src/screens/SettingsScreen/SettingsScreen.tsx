@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useLayoutEffect} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 
 const SettingsScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({title: 'Настройки'});
   }, [navigation]);
   return (
