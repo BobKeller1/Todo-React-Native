@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import CustomIcon from '../CustomIcon';
 
 const styles = StyleSheet.create({
   todoItem: {
@@ -17,6 +18,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flexGrow: 1,
+    flexDirection: 'row',
     marginBottom: 10,
   },
   sideContainer: {
@@ -48,6 +50,9 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     color: 'rgba(0,0,0,0.54)',
   },
+  textContainer: {
+    flexGrow: 1,
+  },
 });
 
 interface ListProps {
@@ -60,10 +65,10 @@ interface ListProps {
 
 const List: FC<ListProps> = ({title, description, status, date, onPress}) => {
   return (
-    <View>
-      <TouchableOpacity onPress={onPress}>
-        <View style={styles.container}>
-          <View style={styles.mainContainer}>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.container}>
+        <View style={styles.mainContainer}>
+          <View style={styles.textContainer}>
             <Text style={[status && styles.textCompleted, styles.title]}>
               {title}
             </Text>
@@ -71,15 +76,19 @@ const List: FC<ListProps> = ({title, description, status, date, onPress}) => {
               {description}
             </Text>
           </View>
-          <View style={styles.sideContainer}>
-            <Text style={[styles.status, status && styles.statusCompleted]}>
-              {status ? 'Выполнено' : 'Не выполнено'}
-            </Text>
-            <Text style={styles.date}>{date}</Text>
+          <View>
+            {status ? (
+              <CustomIcon name={'checkbox-checked'} size={20} color={'green'} />
+            ) : (
+              <CustomIcon name={'checkbox-unchecked'} size={20} />
+            )}
           </View>
         </View>
-      </TouchableOpacity>
-    </View>
+        <View style={styles.sideContainer}>
+          <Text style={styles.date}>{date}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
