@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ModalScreenDescription = () => {
+const ModalScreenDescription = ({route}) => {
   const [description, setDescription] = useState('');
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const keyBoardHeight = useKeyboardHeight();
@@ -96,7 +96,13 @@ const ModalScreenDescription = () => {
             bottom: buttonAnim,
           },
         ]}>
-        <TouchableOpacity onPress={() => navigation.push('ModalScreenDate')}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.push('ModalScreenDate', {
+              name: route.params.name,
+              description,
+            })
+          }>
           <CustomIcon name={'arrow-right2'} size={18} color={'#268CC7'} />
         </TouchableOpacity>
       </Animated.View>

@@ -1,4 +1,5 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {RouteProp} from '@react-navigation/native';
 import {
   View,
   Text,
@@ -46,11 +47,25 @@ const styles = StyleSheet.create({
   },
 });
 
-const ModalScreenDate = () => {
+interface route {
+  route: RouteProp<{params: {name: string; description: string}}, 'params'>;
+}
+
+const ModalScreenDate: FC<route> = ({route}) => {
   const [date, setDate] = useState('');
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const keyBoardHeight = useKeyboardHeight();
   const buttonAnim = useRef(new Animated.Value(0)).current;
+  const {name, description} = route.params;
+
+  const todo = {
+    name,
+    description,
+    date,
+    id: Date.now(),
+  };
+
+  console.log(todo);
 
   const buttonUp = useCallback(() => {
     Animated.timing(buttonAnim, {

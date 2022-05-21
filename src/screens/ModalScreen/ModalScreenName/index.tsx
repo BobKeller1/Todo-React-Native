@@ -102,11 +102,15 @@ const ModalScreenName = () => {
         ]}>
         <TouchableOpacity
           disabled={!name}
-          onPress={() => navigation.push('ModalScreenDescription')}>
+          onPress={() =>
+            navigation.push('ModalScreenDescription', {
+              name,
+            })
+          }>
           <CustomIcon
             name={'arrow-right2'}
             size={18}
-            color={!!name ? '#268CC7' : 'gray'}
+            color={name ? '#268CC7' : 'gray'}
           />
         </TouchableOpacity>
       </Animated.View>
