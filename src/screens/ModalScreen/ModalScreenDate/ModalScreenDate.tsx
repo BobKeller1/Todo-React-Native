@@ -1,16 +1,11 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {RouteProp} from '@react-navigation/native';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Animated,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import React, {FC, useState} from 'react';
+import {View, Text, StyleSheet, Animated, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import useKeyboardHeight from '../../../hooks/useKeyboardHeight';
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
+import {RouteModalsProp} from '../../HomeScreen';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,7 +22,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(250, 250, 250, 0.93);',
   },
   header: {
-    fontSize: 20,
+    flex: 1,
+    fontSize: 18,
     marginBottom: 20,
   },
   buttonNext: {
@@ -47,72 +43,51 @@ const styles = StyleSheet.create({
   },
 });
 
-interface route {
-  route: RouteProp<{params: {name: string; description: string}}, 'params'>;
-}
-
-const ModalScreenDate: FC<route> = ({route}) => {
-  const [date, setDate] = useState('');
+const ModalScreenDate: FC<RouteModalsProp> = ({route}) => {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-  const keyBoardHeight = useKeyboardHeight();
-  const buttonAnim = useRef(new Animated.Value(0)).current;
   const {name, description} = route.params;
+  const [date, setDate] = useState<Date>(new Date(Date.now()));
 
   const todo = {
-    name,
+    title: name,
     description,
-    date,
-    id: Date.now(),
+    status: false,
+    date: date.valueOf(),
+    id: Date.now().toString(),
   };
 
-  console.log(todo);
-
-  const buttonUp = useCallback(() => {
-    Animated.timing(buttonAnim, {
-      useNativeDriver: false,
-      toValue: 356,
-      duration: 300,
-    }).start();
-  }, [buttonAnim]);
-
-  const buttonDown = useCallback(() => {
-    Animated.timing(buttonAnim, {
-      useNativeDriver: false,
-      toValue: 60,
-      duration: 300,
-    }).start();
-  }, [buttonAnim]);
-
-  useEffect(() => {
-    if (Number(keyBoardHeight) !== 0) {
-      buttonUp();
-    } else {
-      buttonDown();
-    }
-  }, [buttonDown, buttonUp, keyBoardHeight]);
+  const onChange = (
+    event: DateTimePickerEvent,
+    selectedDate: Date | undefined,
+  ) => {
+    setDate(selectedDate);
+  };
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.header}>Введите дату окончания задачи:</Text>
-        <TextInput
-          style={styles.input}
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={styles.header}>Выберите дату окончания задачи:</Text>
+        <DateTimePicker
+          testID="dateTimePicker"
           value={date}
-          onChangeText={setDate}
-          placeholder={'Enter the end date of the task...'}
+          mode={'date'}
+          is24Hour={true}
+          onChange={onChange}
+          style={{flex: 1}}
         />
       </View>
-      <Animated.View
-        style={[
-          styles.buttonNext,
-          {
-            bottom: buttonAnim,
-          },
-        ]}>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+      <View style={styles.buttonNext}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate({
+              name: 'HomeScreen',
+              params: {post: todo, id: 1},
+              merge: true,
+            })
+          }>
           <Text style={{color: 'green'}}>Создать задачу</Text>
         </TouchableOpacity>
-      </Animated.View>
+      </View>
     </View>
   );
 };

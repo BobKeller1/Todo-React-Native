@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useMemo, useState} from 'react';
+import React, {FC, useEffect, useLayoutEffect, useMemo, useState} from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -10,7 +10,11 @@ import {
 import TodoList from './components/TodoList';
 import SectionedTodoList from './components/SectionedTodoList';
 import {ITodoItem} from '../../app/App';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   container: {
@@ -63,7 +67,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const HomeScreen = () => {
+export interface RouteModalsProp {
+  route: RouteProp<
+    {params: {name: string; description: string; post: ITodoItem}},
+    'params'
+  >;
+}
+
+const HomeScreen: FC<RouteModalsProp> = ({route}) => {
   const data: ITodoItem[] = useMemo(
     () => [
       {
@@ -136,10 +147,16 @@ const HomeScreen = () => {
   const [todos, setTodos] = useState(data);
 
   const setComletedHandler = (todoId: string) => {
-    const index = data.findIndex(todo => todo.id === todoId);
+    const index = todos.findIndex(todo => todo.id === todoId);
+    console.log(index);
+
     const todoList = [...todos];
     todoList[index].status = !todoList[index].status;
     setTodos(todoList);
+  };
+
+  const addTodo = (todo: ITodoItem) => {
+    setTodos([...todos, todo]);
   };
 
   const navigation = useNavigation<NavigationProp<any>>();
@@ -147,6 +164,12 @@ const HomeScreen = () => {
   useLayoutEffect(() => {
     navigation.setOptions({title: 'Главный экран'});
   }, [navigation]);
+
+  useEffect(() => {
+    if (route.params?.post) {
+      addTodo(route.params?.post);
+    }
+  }, [route.params?.post]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -170,7 +193,9 @@ const HomeScreen = () => {
       <View style={styles.buttonAddTaskContainer}>
         <TouchableOpacity
           style={styles.buttonAddTask}
-          onPress={() => navigation.navigate('Modal')}>
+          onPress={() => {
+            navigation.navigate('Modal');
+          }}>
           <Text style={styles.buttonText}>+</Text>
         </TouchableOpacity>
       </View>

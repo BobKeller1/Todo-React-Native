@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import useKeyboardHeight from '../../../hooks/useKeyboardHeight';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import CustomIcon from '../../../components/CustomIcon';
+import {RouteModalsProp} from '../../HomeScreen';
 
 const styles = StyleSheet.create({
   container: {
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ModalScreenDescription = ({route}) => {
+const ModalScreenDescription: FC<RouteModalsProp> = ({route}) => {
   const [description, setDescription] = useState('');
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const keyBoardHeight = useKeyboardHeight();
