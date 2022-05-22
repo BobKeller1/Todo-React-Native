@@ -1,17 +1,8 @@
 import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
-import {
-  View,
-  Text,
-  Animated,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {View, Text, Animated, TextInput, StyleSheet} from 'react-native';
 import useKeyboardHeight from '../../../hooks/useKeyboardHeight';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import CustomIcon from '../../../components/CustomIcon';
 import {RouteModalsProp} from '../../HomeScreen';
+import ModalButtons from '../../../components/ModalButtons';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,27 +22,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
   },
-  buttonNext: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    position: 'absolute',
-    bottom: 60,
-    right: 30,
-    width: 70,
-    height: 40,
-    paddingTop: 9,
-    paddingRight: 16,
-    paddingBottom: 9,
-    paddingLeft: 16,
-    borderRadius: 100,
-    borderColor: '#268CC7',
-    borderWidth: 1,
-  },
 });
 
 const ModalScreenDescription: FC<RouteModalsProp> = ({route}) => {
+  const {name} = route.params;
   const [description, setDescription] = useState('');
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const keyBoardHeight = useKeyboardHeight();
   const buttonAnim = useRef(new Animated.Value(0)).current;
 
@@ -90,23 +65,12 @@ const ModalScreenDescription: FC<RouteModalsProp> = ({route}) => {
           placeholder={'Enter the task description...'}
         />
       </View>
-      <Animated.View
-        style={[
-          styles.buttonNext,
-          {
-            bottom: buttonAnim,
-          },
-        ]}>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.push('ModalScreenDate', {
-              name: route.params.name,
-              description,
-            })
-          }>
-          <CustomIcon name={'arrow-right2'} size={18} color={'#268CC7'} />
-        </TouchableOpacity>
-      </Animated.View>
+      <ModalButtons
+        buttonName={'ButtonNextDescription'}
+        buttonAnim={buttonAnim}
+        name={name}
+        description={description}
+      />
     </View>
   );
 };

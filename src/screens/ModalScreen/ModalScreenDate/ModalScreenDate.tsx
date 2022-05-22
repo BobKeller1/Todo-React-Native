@@ -1,11 +1,10 @@
 import React, {FC, useState} from 'react';
-import {View, Text, StyleSheet, Animated, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {View, Text, StyleSheet } from 'react-native';
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import {RouteModalsProp} from '../../HomeScreen';
+import ModalButtons from '../../../components/ModalButtons';
 
 const styles = StyleSheet.create({
   container: {
@@ -44,7 +43,6 @@ const styles = StyleSheet.create({
 });
 
 const ModalScreenDate: FC<RouteModalsProp> = ({route}) => {
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const {name, description} = route.params;
   const [date, setDate] = useState<Date>(new Date(Date.now()));
 
@@ -52,7 +50,7 @@ const ModalScreenDate: FC<RouteModalsProp> = ({route}) => {
     title: name,
     description,
     status: false,
-    date: date.valueOf(),
+    date: date.valueOf().toString(),
     id: Date.now().toString(),
   };
 
@@ -77,16 +75,7 @@ const ModalScreenDate: FC<RouteModalsProp> = ({route}) => {
         />
       </View>
       <View style={styles.buttonNext}>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate({
-              name: 'HomeScreen',
-              params: {post: todo, id: 1},
-              merge: true,
-            })
-          }>
-          <Text style={{color: 'green'}}>Создать задачу</Text>
-        </TouchableOpacity>
+        <ModalButtons buttonName={'CreateTodo'} todo={todo} />
       </View>
     </View>
   );
