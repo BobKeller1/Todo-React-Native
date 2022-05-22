@@ -3,6 +3,7 @@ import {View, Text, Animated, TextInput, StyleSheet} from 'react-native';
 import useKeyboardHeight from '../../../hooks/useKeyboardHeight';
 import {RouteModalsProp} from '../../HomeScreen';
 import ModalButtons from '../../../components/ModalButtons';
+import useAnimateButton from '../../../hooks/useAnimateButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,21 +31,8 @@ const ModalScreenDescription: FC<RouteModalsProp> = ({route}) => {
   const keyBoardHeight = useKeyboardHeight();
   const buttonAnim = useRef(new Animated.Value(0)).current;
 
-  const buttonUp = useCallback(() => {
-    Animated.timing(buttonAnim, {
-      useNativeDriver: false,
-      toValue: 356,
-      duration: 300,
-    }).start();
-  }, [buttonAnim]);
-
-  const buttonDown = useCallback(() => {
-    Animated.timing(buttonAnim, {
-      useNativeDriver: false,
-      toValue: 60,
-      duration: 300,
-    }).start();
-  }, [buttonAnim]);
+  const buttonUp = useAnimateButton(buttonAnim, false, 300, 360);
+  const buttonDown = useAnimateButton(buttonAnim, false, 300, 60);
 
   useEffect(() => {
     if (Number(keyBoardHeight) !== 0) {

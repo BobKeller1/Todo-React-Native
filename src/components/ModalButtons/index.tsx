@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import CustomIcon from '../CustomIcon';
-import {Animated, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {ITodoItem} from '../../app/App';
@@ -22,6 +22,10 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderColor: '#268CC7',
     borderWidth: 1,
+  },
+  buttonCreateTodo: {
+    width: 150,
+    borderColor: 'green',
   },
   buttonNextDisabled: {
     borderColor: 'gray',
@@ -101,16 +105,18 @@ const ModalButtons: FC<ButtonModalProp> = ({
       );
     case 'CreateTodo':
       return (
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate({
-              name: 'HomeScreen',
-              params: {post: todo},
-              merge: true,
-            })
-          }>
-          <Text style={{color: colors.createTodo}}>Создать задачу</Text>
-        </TouchableOpacity>
+        <View style={[styles.buttonNext, styles.buttonCreateTodo]}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate({
+                name: 'HomeScreen',
+                params: {post: todo},
+                merge: true,
+              })
+            }>
+            <Text style={{color: colors.createTodo}}>Создать задачу</Text>
+          </TouchableOpacity>
+        </View>
       );
     default:
       return null;
