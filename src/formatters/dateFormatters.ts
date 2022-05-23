@@ -12,4 +12,8 @@ const dateFormatter = (
   return new Date(+date).toLocaleString('ru-RU');
 };
 
-export {dateFormatter};
+const formatDatePicker = (date: Date) => {
+  return date.valueOf().toString();
+};
+
+export {dateFormatter, formatDatePicker};

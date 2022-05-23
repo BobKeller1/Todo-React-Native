@@ -78,67 +78,26 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
   const data: ITodoItem[] = useMemo(
     () => [
       {
-        title: 'todo title 0',
-        description: 'description 0',
-        status: false,
-        date: '1652207435533',
-        id: '10',
-      },
-      {
         title: 'todo title 1',
         description: 'description 0',
-        status: false,
+        status: true,
         date: '1652207435533',
         id: '11',
       },
-      {
-        title: 'todo title 2',
-        description: 'description 0',
-        status: true,
-        date: '1652207435533',
-        id: '111',
-      },
-      {
-        title: 'todo title 3',
-        description: 'description 0',
-        status: false,
-        date: '1652207435533',
-        id: '12',
-      },
-      {
-        title: 'todo title 4',
-        description: 'description 0',
-        status: false,
-        date: '1652207435533',
-        id: '13',
-      },
+
       {
         title: 'todo title 5',
         description: 'description 0',
-        status: true,
-        date: '1652207435533',
+        status: false,
+        date: '1672207435533',
         id: '14',
       },
       {
         title: 'todo title 6',
         description: 'description 0',
-        status: false,
-        date: '1652207435533',
-        id: '15',
-      },
-      {
-        title: 'todo title 7',
-        description: 'description 0',
-        status: false,
-        date: '1652207435533',
-        id: '16',
-      },
-      {
-        title: 'todo title 8',
-        description: 'description 0',
         status: true,
         date: '1652207435533',
-        id: '17',
+        id: '15',
       },
     ],
     [],
@@ -148,8 +107,6 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
 
   const setComletedHandler = (todoId: string) => {
     const index = todos.findIndex(todo => todo.id === todoId);
-    console.log(index);
-
     const todoList = [...todos];
     todoList[index].status = !todoList[index].status;
     setTodos(todoList);

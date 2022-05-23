@@ -7,6 +7,7 @@ import {RouteModalsProp} from '../../HomeScreen';
 import ModalButtons from '../../../components/ModalButtons';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {formatDatePicker} from '../../../formatters/dateFormatters';
 
 const styles = StyleSheet.create({
   container: {
@@ -53,7 +54,7 @@ const ModalScreenDate: FC<RouteModalsProp> = ({route}) => {
     title: name,
     description,
     status: false,
-    date: date.valueOf().toString(),
+    date: formatDatePicker(date),
     id: Date.now().toString(),
   };
 
