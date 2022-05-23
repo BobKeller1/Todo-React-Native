@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import CustomIcon from '../CustomIcon';
-import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Animated, StyleSheet, TouchableOpacity} from 'react-native';
 import Value = Animated.Value;
 
 const styles = StyleSheet.create({
@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 60,
-    right: 30,
+    top: 650,
+    right: 40,
     width: 70,
     height: 40,
     paddingTop: 9,
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   buttonCreateTodo: {
-    width: 150,
     borderColor: 'green',
   },
   buttonNextDisabled: {
@@ -29,77 +28,49 @@ const styles = StyleSheet.create({
   },
 });
 
+enum Colors {
+  Primary = 'PRIMARY',
+  Disabled = 'DISABLED',
+  Green = 'GREEN',
+}
+
 interface ButtonModalProp {
-  buttonName: string;
+  isKeyboardAware?: boolean;
   isValid?: boolean;
-  navigateToDescription?: () => void;
-  navigateToDate?: () => void;
-  navigateToHome?: () => void;
+  navigateHandler: () => void;
   buttonAnim?: Value;
+  color: Colors;
 }
 
 const ModalButtons: FC<ButtonModalProp> = ({
-  buttonName,
   isValid,
-  navigateToDescription,
-  navigateToDate,
-  navigateToHome,
   buttonAnim,
+  navigateHandler,
+  color,
 }) => {
   const colors = {
-    primary: '#268CC7',
-    disabled: 'gray',
-    createTodo: 'green',
+    PRIMARY: '#268CC7',
+    DISABLED: 'gray',
+    GREEN: 'green',
   };
-  switch (buttonName) {
-    case 'ButtonNextName':
-      return (
-        <Animated.View
-          style={[
-            styles.buttonNext,
-            isValid && styles.buttonNextDisabled,
-            {
-              bottom: buttonAnim,
-            },
-          ]}>
-          <TouchableOpacity disabled={isValid} onPress={navigateToDescription}>
-            <CustomIcon
-              name={'arrow-right2'}
-              size={18}
-              color={!isValid ? colors.primary : colors.disabled}
-            />
-          </TouchableOpacity>
-        </Animated.View>
-      );
-    case 'ButtonNextDescription':
-      return (
-        <Animated.View
-          style={[
-            styles.buttonNext,
-            {
-              bottom: buttonAnim,
-            },
-          ]}>
-          <TouchableOpacity onPress={navigateToDate}>
-            <CustomIcon
-              name={'arrow-right2'}
-              size={18}
-              color={colors.primary}
-            />
-          </TouchableOpacity>
-        </Animated.View>
-      );
-    case 'CreateTodo':
-      return (
-        <View style={[styles.buttonNext, styles.buttonCreateTodo]}>
-          <TouchableOpacity onPress={navigateToHome}>
-            <Text style={{color: colors.createTodo}}>Создать задачу</Text>
-          </TouchableOpacity>
-        </View>
-      );
-    default:
-      return null;
-  }
+  return (
+    <Animated.View
+      style={[
+        styles.buttonNext,
+        isValid ? styles.buttonNextDisabled : {borderColor: colors[color]},
+        {
+          bottom: buttonAnim,
+        },
+      ]}>
+      <TouchableOpacity disabled={isValid} onPress={navigateHandler}>
+        <CustomIcon
+          name={'arrow-right2'}
+          size={18}
+          color={!isValid ? colors[color] : colors.DISABLED}
+        />
+      </TouchableOpacity>
+    </Animated.View>
+  );
 };
 
 export default ModalButtons;

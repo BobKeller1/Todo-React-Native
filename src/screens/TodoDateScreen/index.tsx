@@ -1,27 +1,18 @@
-import React, {FC, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {FC, useLayoutEffect, useState} from 'react';
+import {View, Text, StyleSheet, Button} from 'react-native';
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import {RouteModalsProp} from '../../HomeScreen';
-import ModalButtons from '../../../components/ModalButtons';
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {formatDatePicker} from '../../../formatters/dateFormatters';
+import {RouteModalsProp} from '../HomeScreen';
+import ModalButtons from '../../components/ModalButtons';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {formatToTimestamp} from '../../formatters/dateFormatters';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
     padding: 16,
-    position: 'relative',
-  },
-  input: {
-    height: 50,
-    padding: 7,
-    paddingLeft: 15,
-    borderRadius: 10,
-    backgroundColor: 'rgba(250, 250, 250, 0.93);',
   },
   headerContainer: {
     flexDirection: 'row',
@@ -37,10 +28,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const ModalScreenDate: FC<RouteModalsProp> = ({route}) => {
+const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
   const {name, description} = route.params;
   const [date, setDate] = useState<Date>(new Date(Date.now()));
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+  const navigation = useNavigation<NavigationProp<any>>();
 
   const navigateToHome = () => {
     navigation.navigate({
@@ -54,13 +45,25 @@ const ModalScreenDate: FC<RouteModalsProp> = ({route}) => {
     title: name,
     description,
     status: false,
-    date: formatDatePicker(date),
+    date: formatToTimestamp(date),
     id: Date.now().toString(),
   };
 
   const onChange = (event: DateTimePickerEvent, selectedDate: Date) => {
     setDate(selectedDate);
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: '#beb9b9',
+      },
+      headerLeft: () => (
+        <Button onPress={() => navigation.pop()} title="Назад" />
+      ),
+      title: 'Добавить дату',
+    });
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -75,9 +78,9 @@ const ModalScreenDate: FC<RouteModalsProp> = ({route}) => {
           style={styles.timePicker}
         />
       </View>
-      <ModalButtons buttonName={'CreateTodo'} navigateToHome={navigateToHome} />
+      <ModalButtons navigateHandler={navigateToHome} color={"GREEN"} />
     </View>
   );
 };
 
-export default ModalScreenDate;
+export default TodoDateScreen;

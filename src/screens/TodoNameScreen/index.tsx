@@ -1,10 +1,16 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Animated, StyleSheet, Text, TextInput, View} from 'react-native';
-import useKeyboardHeight from '../../../hooks/useKeyboardHeight';
-import ModalButtons from '../../../components/ModalButtons';
-import useAnimateButton from '../../../hooks/useAnimateButton';
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {
+  Animated,
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import useKeyboardHeight from '../../hooks/useKeyboardHeight';
+import ModalButtons from '../../components/ModalButtons';
+import useAnimateButton from '../../hooks/useAnimateButton';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,18 +32,20 @@ const styles = StyleSheet.create({
   },
 });
 
-const ModalScreenName = () => {
+const TodoNameScreen = () => {
   const [name, setName] = useState('');
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+  const navigation = useNavigation<NavigationProp<any>>();
   const isValid = name.length === 0;
   const keyBoardHeight = useKeyboardHeight();
+  const indent = Number(keyBoardHeight) + 10;
+  const initialHeight = 60;
   const buttonAnim = useRef(new Animated.Value(0)).current;
 
-  const buttonUp = useAnimateButton(buttonAnim, false, 300, 360);
-  const buttonDown = useAnimateButton(buttonAnim, false, 300, 60);
+  const buttonUp = useAnimateButton(buttonAnim, false, 300, indent);
+  const buttonDown = useAnimateButton(buttonAnim, false, 300, initialHeight);
 
   const navigateToDescription = () => {
-    navigation.push('ModalScreenDescription', {
+    navigation.push('ScreenDescription', {
       name,
     });
   };
@@ -49,6 +57,18 @@ const ModalScreenName = () => {
       buttonDown();
     }
   }, [buttonDown, buttonUp, keyBoardHeight]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: '#beb9b9',
+      },
+      headerLeft: () => (
+        <Button onPress={() => navigation.goBack()} title="Закрыть" />
+      ),
+      title: 'Добавить задачу',
+    });
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
@@ -62,13 +82,13 @@ const ModalScreenName = () => {
         />
       </View>
       <ModalButtons
-        buttonName={'ButtonNextName'}
         isValid={isValid}
-        navigateToDescription={navigateToDescription}
+        navigateHandler={navigateToDescription}
         buttonAnim={buttonAnim}
+        color={'PRIMARY'}
       />
     </View>
   );
 };
 
-export default ModalScreenName;
+export default TodoNameScreen;
