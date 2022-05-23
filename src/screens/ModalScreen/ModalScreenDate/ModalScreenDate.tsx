@@ -5,6 +5,8 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 import {RouteModalsProp} from '../../HomeScreen';
 import ModalButtons from '../../../components/ModalButtons';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,6 +39,15 @@ const styles = StyleSheet.create({
 const ModalScreenDate: FC<RouteModalsProp> = ({route}) => {
   const {name, description} = route.params;
   const [date, setDate] = useState<Date>(new Date(Date.now()));
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
+  const navigateToHome = () => {
+    navigation.navigate({
+      name: 'HomeScreen',
+      params: {post: todo},
+      merge: true,
+    });
+  };
 
   const todo = {
     title: name,
@@ -63,7 +74,7 @@ const ModalScreenDate: FC<RouteModalsProp> = ({route}) => {
           style={styles.timePicker}
         />
       </View>
-      <ModalButtons buttonName={'CreateTodo'} todo={todo} />
+      <ModalButtons buttonName={'CreateTodo'} navigateToHome={navigateToHome} />
     </View>
   );
 };

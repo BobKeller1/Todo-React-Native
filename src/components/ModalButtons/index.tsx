@@ -1,9 +1,6 @@
 import React, {FC} from 'react';
 import CustomIcon from '../CustomIcon';
 import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ITodoItem} from '../../app/App';
 import Value = Animated.Value;
 
 const styles = StyleSheet.create({
@@ -34,20 +31,21 @@ const styles = StyleSheet.create({
 
 interface ButtonModalProp {
   buttonName: string;
-  name?: string;
-  description?: string;
-  todo?: ITodoItem;
+  isValid?: boolean;
+  navigateToDescription?: () => void;
+  navigateToDate?: () => void;
+  navigateToHome?: () => void;
   buttonAnim?: Value;
 }
 
 const ModalButtons: FC<ButtonModalProp> = ({
   buttonName,
-  name,
-  description,
-  todo,
+  isValid,
+  navigateToDescription,
+  navigateToDate,
+  navigateToHome,
   buttonAnim,
 }) => {
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const colors = {
     primary: '#268CC7',
     disabled: 'gray',
@@ -59,22 +57,16 @@ const ModalButtons: FC<ButtonModalProp> = ({
         <Animated.View
           style={[
             styles.buttonNext,
-            !name && styles.buttonNextDisabled,
+            isValid && styles.buttonNextDisabled,
             {
               bottom: buttonAnim,
             },
           ]}>
-          <TouchableOpacity
-            disabled={!name}
-            onPress={() =>
-              navigation.push('ModalScreenDescription', {
-                name,
-              })
-            }>
+          <TouchableOpacity disabled={isValid} onPress={navigateToDescription}>
             <CustomIcon
               name={'arrow-right2'}
               size={18}
-              color={name ? colors.primary : colors.disabled}
+              color={!isValid ? colors.primary : colors.disabled}
             />
           </TouchableOpacity>
         </Animated.View>
@@ -88,13 +80,7 @@ const ModalButtons: FC<ButtonModalProp> = ({
               bottom: buttonAnim,
             },
           ]}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.push('ModalScreenDate', {
-                name,
-                description,
-              })
-            }>
+          <TouchableOpacity onPress={navigateToDate}>
             <CustomIcon
               name={'arrow-right2'}
               size={18}
@@ -106,14 +92,7 @@ const ModalButtons: FC<ButtonModalProp> = ({
     case 'CreateTodo':
       return (
         <View style={[styles.buttonNext, styles.buttonCreateTodo]}>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate({
-                name: 'HomeScreen',
-                params: {post: todo},
-                merge: true,
-              })
-            }>
+          <TouchableOpacity onPress={navigateToHome}>
             <Text style={{color: colors.createTodo}}>Создать задачу</Text>
           </TouchableOpacity>
         </View>

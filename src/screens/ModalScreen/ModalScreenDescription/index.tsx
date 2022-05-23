@@ -1,9 +1,11 @@
-import React, {FC, useCallback, useEffect, useRef, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {View, Text, Animated, TextInput, StyleSheet} from 'react-native';
 import useKeyboardHeight from '../../../hooks/useKeyboardHeight';
 import {RouteModalsProp} from '../../HomeScreen';
 import ModalButtons from '../../../components/ModalButtons';
 import useAnimateButton from '../../../hooks/useAnimateButton';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,9 +29,17 @@ const styles = StyleSheet.create({
 
 const ModalScreenDescription: FC<RouteModalsProp> = ({route}) => {
   const {name} = route.params;
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const [description, setDescription] = useState('');
   const keyBoardHeight = useKeyboardHeight();
   const buttonAnim = useRef(new Animated.Value(0)).current;
+
+  const navigateToDate = () => {
+    navigation.push('ModalScreenDate', {
+      name,
+      description,
+    });
+  };
 
   const buttonUp = useAnimateButton(buttonAnim, false, 300, 360);
   const buttonDown = useAnimateButton(buttonAnim, false, 300, 60);
@@ -56,8 +66,7 @@ const ModalScreenDescription: FC<RouteModalsProp> = ({route}) => {
       <ModalButtons
         buttonName={'ButtonNextDescription'}
         buttonAnim={buttonAnim}
-        name={name}
-        description={description}
+        navigateToDate={navigateToDate}
       />
     </View>
   );

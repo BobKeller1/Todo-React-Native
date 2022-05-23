@@ -3,6 +3,8 @@ import {Animated, StyleSheet, Text, TextInput, View} from 'react-native';
 import useKeyboardHeight from '../../../hooks/useKeyboardHeight';
 import ModalButtons from '../../../components/ModalButtons';
 import useAnimateButton from '../../../hooks/useAnimateButton';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,11 +28,19 @@ const styles = StyleSheet.create({
 
 const ModalScreenName = () => {
   const [name, setName] = useState('');
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+  const isValid = name.length === 0;
   const keyBoardHeight = useKeyboardHeight();
   const buttonAnim = useRef(new Animated.Value(0)).current;
 
   const buttonUp = useAnimateButton(buttonAnim, false, 300, 360);
   const buttonDown = useAnimateButton(buttonAnim, false, 300, 60);
+
+  const navigateToDescription = () => {
+    navigation.push('ModalScreenDescription', {
+      name,
+    });
+  };
 
   useEffect(() => {
     if (Number(keyBoardHeight) !== 0) {
@@ -53,7 +63,8 @@ const ModalScreenName = () => {
       </View>
       <ModalButtons
         buttonName={'ButtonNextName'}
-        name={name}
+        isValid={isValid}
+        navigateToDescription={navigateToDescription}
         buttonAnim={buttonAnim}
       />
     </View>
