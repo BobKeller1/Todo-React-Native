@@ -9,12 +9,13 @@ import {
 } from 'react-native';
 import TodoList from './components/TodoList';
 import SectionedTodoList from './components/SectionedTodoList';
-import {ITodoItem} from '../../app/App';
 import {
   NavigationProp,
   RouteProp,
   useNavigation,
 } from '@react-navigation/native';
+import {ITodoItem} from '../../store/reducers/rootReducer';
+import {connect} from 'react-redux';
 
 const styles = StyleSheet.create({
   container: {
@@ -72,9 +73,11 @@ export interface RouteModalsProp {
     {params: {name: string; description: string; post: ITodoItem}},
     'params'
   >;
+  todoArray: ITodoItem[];
 }
 
-const HomeScreen: FC<RouteModalsProp> = ({route}) => {
+const HomeScreen: FC<RouteModalsProp> = props => {
+  console.log(props.todo);
   const data: ITodoItem[] = useMemo(
     () => [
       {
@@ -104,7 +107,6 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
   );
   const [searchQuery, setSearchQuery] = useState('');
   const [todos, setTodos] = useState(data);
-
   const setComletedHandler = (todoId: string) => {
     const index = todos.findIndex(todo => todo.id === todoId);
     const todoList = [...todos];
@@ -123,10 +125,10 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
   }, [navigation]);
 
   useEffect(() => {
-    if (route.params?.post) {
-      addTodo(route.params?.post);
+    if (props.route.params?.post) {
+      addTodo(props.route.params?.post);
     }
-  }, [route.params?.post]);
+  }, [props.route.params?.post]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -159,4 +161,10 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
     </SafeAreaView>
   );
 };
-export default HomeScreen;
+
+const mapStateToProps = state => {
+  const {todo} = state;
+  return {todo};
+};
+
+export default connect(mapStateToProps)(HomeScreen);
