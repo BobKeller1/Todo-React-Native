@@ -5,7 +5,7 @@ import DateTimePicker, {
 } from '@react-native-community/datetimepicker';
 import {RouteModalsProp} from '../HomeScreen';
 import ModalButtons from '../../components/ModalButtons';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {formatToTimestamp} from '../../formatters/dateFormatters';
 
 const styles = StyleSheet.create({
@@ -26,12 +26,34 @@ const styles = StyleSheet.create({
   timePicker: {
     flex: 1,
   },
+  buttonNext: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 60,
+    right: 40,
+    width: 70,
+    height: 40,
+    paddingTop: 9,
+    paddingRight: 16,
+    paddingBottom: 9,
+    paddingLeft: 16,
+    borderRadius: 100,
+    borderColor: '#268CC7',
+    borderWidth: 1,
+  },
+  buttonCreateTodo: {
+    borderColor: 'green',
+  },
+  buttonNextDisabled: {
+    borderColor: 'gray',
+  },
 });
 
 const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
   const {name, description} = route.params;
   const [date, setDate] = useState<Date>(new Date(Date.now()));
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useNavigation<any>();
 
   const navigateToHome = () => {
     navigation.navigate({
@@ -49,7 +71,7 @@ const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
     id: Date.now().toString(),
   };
 
-  const onChange = (event: DateTimePickerEvent, selectedDate: Date) => {
+  const onChange = (event: DateTimePickerEvent, selectedDate: Date | any) => {
     setDate(selectedDate);
   };
 
@@ -78,7 +100,9 @@ const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
           style={styles.timePicker}
         />
       </View>
-      <ModalButtons navigateHandler={navigateToHome} color={"GREEN"} />
+      <View style={[styles.buttonNext, styles.buttonCreateTodo]}>
+        <ModalButtons navigateHandler={navigateToHome} color="green" />
+      </View>
     </View>
   );
 };

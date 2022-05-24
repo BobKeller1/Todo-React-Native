@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {FC, useLayoutEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,11 +7,10 @@ import {
   StyleSheet,
   Button,
 } from 'react-native';
-import useKeyboardHeight from '../../hooks/useKeyboardHeight';
 import {RouteModalsProp} from '../HomeScreen';
 import ModalButtons from '../../components/ModalButtons';
-import useAnimateButton from '../../hooks/useAnimateButton';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import useAnimatedButtonPosition from '../../hooks/useAnimatedButtonPosition';
+import {useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,16 +30,33 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
   },
+  buttonNext: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 40,
+    width: 70,
+    height: 40,
+    paddingTop: 9,
+    paddingRight: 16,
+    paddingBottom: 9,
+    paddingLeft: 16,
+    borderRadius: 100,
+    borderColor: '#268CC7',
+    borderWidth: 1,
+  },
+  buttonCreateTodo: {
+    borderColor: 'green',
+  },
+  buttonNextDisabled: {
+    borderColor: 'gray',
+  },
 });
 
 const TodoDescriptionScreen: FC<RouteModalsProp> = ({route}) => {
   const {name} = route.params;
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useNavigation<any>();
   const [description, setDescription] = useState('');
-  const keyBoardHeight = useKeyboardHeight();
-  const indent = Number(keyBoardHeight) + 10;
-  const initialHeight = 60;
-  const buttonAnim = useRef(new Animated.Value(0)).current;
 
   const navigateToDate = () => {
     navigation.push('ScreenDate', {
@@ -49,16 +65,7 @@ const TodoDescriptionScreen: FC<RouteModalsProp> = ({route}) => {
     });
   };
 
-  const buttonUp = useAnimateButton(buttonAnim, false, 300, indent);
-  const buttonDown = useAnimateButton(buttonAnim, false, 300, initialHeight);
-
-  useEffect(() => {
-    if (Number(keyBoardHeight) !== 0) {
-      buttonUp();
-    } else {
-      buttonDown();
-    }
-  }, [buttonDown, buttonUp, keyBoardHeight]);
+  const buttonAnim = useAnimatedButtonPosition(false, 300, 60, 10);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -83,11 +90,19 @@ const TodoDescriptionScreen: FC<RouteModalsProp> = ({route}) => {
           placeholder={'Enter the task description...'}
         />
       </View>
-      <ModalButtons
-        buttonAnim={buttonAnim}
-        navigateHandler={navigateToDate}
-        color={'PRIMARY'}
-      />
+      <Animated.View
+        style={[
+          styles.buttonNext,
+          {
+            bottom: buttonAnim,
+          },
+        ]}>
+        <ModalButtons
+          buttonAnim={buttonAnim}
+          navigateHandler={navigateToDate}
+          color={'primary'}
+        />
+      </Animated.View>
     </View>
   );
 };

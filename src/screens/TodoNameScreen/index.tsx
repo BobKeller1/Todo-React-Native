@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {
   Animated,
   Button,
@@ -7,10 +7,9 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import useKeyboardHeight from '../../hooks/useKeyboardHeight';
 import ModalButtons from '../../components/ModalButtons';
-import useAnimateButton from '../../hooks/useAnimateButton';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import useAnimatedButtonPosition from '../../hooks/useAnimatedButtonPosition';
+import {useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,19 +29,35 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
   },
+  buttonNext: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 40,
+    width: 70,
+    height: 40,
+    paddingTop: 9,
+    paddingRight: 16,
+    paddingBottom: 9,
+    paddingLeft: 16,
+    borderRadius: 100,
+    borderColor: '#268CC7',
+    borderWidth: 1,
+  },
+  buttonCreateTodo: {
+    borderColor: 'green',
+  },
+  buttonNextDisabled: {
+    borderColor: 'gray',
+  },
 });
 
 const TodoNameScreen = () => {
   const [name, setName] = useState('');
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useNavigation<any>();
   const isValid = name.length === 0;
-  const keyBoardHeight = useKeyboardHeight();
-  const indent = Number(keyBoardHeight) + 10;
-  const initialHeight = 60;
-  const buttonAnim = useRef(new Animated.Value(0)).current;
 
-  const buttonUp = useAnimateButton(buttonAnim, false, 300, indent);
-  const buttonDown = useAnimateButton(buttonAnim, false, 300, initialHeight);
+  const buttonAnim = useAnimatedButtonPosition(false, 300, 60, 10);
 
   const navigateToDescription = () => {
     navigation.push('ScreenDescription', {
@@ -50,13 +65,7 @@ const TodoNameScreen = () => {
     });
   };
 
-  useEffect(() => {
-    if (Number(keyBoardHeight) !== 0) {
-      buttonUp();
-    } else {
-      buttonDown();
-    }
-  }, [buttonDown, buttonUp, keyBoardHeight]);
+  console.log(buttonAnim);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -81,12 +90,21 @@ const TodoNameScreen = () => {
           placeholder={'Enter the task name...'}
         />
       </View>
-      <ModalButtons
-        isValid={isValid}
-        navigateHandler={navigateToDescription}
-        buttonAnim={buttonAnim}
-        color={'PRIMARY'}
-      />
+      <Animated.View
+        style={[
+          styles.buttonNext,
+          isValid && styles.buttonNextDisabled,
+          {
+            bottom: buttonAnim,
+          },
+        ]}>
+        <ModalButtons
+          isValid={isValid}
+          navigateHandler={navigateToDescription}
+          buttonAnim={buttonAnim}
+          color={'primary'}
+        />
+      </Animated.View>
     </View>
   );
 };
