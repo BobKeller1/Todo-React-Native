@@ -14,8 +14,7 @@ import {
   RouteProp,
   useNavigation,
 } from '@react-navigation/native';
-import {ITodoItem} from '../../store/reducers/rootReducer';
-import {connect} from 'react-redux';
+import CustomIcon from '../../components/CustomIcon';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,9 +61,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#268CC7',
     borderWidth: 1,
   },
-  buttonText: {
-    fontSize: 30,
+  buttonContainer: {
     color: 'white',
+    paddingTop: 8,
   },
 });
 
@@ -76,6 +75,14 @@ export interface RouteModalsProp {
   todoArray: ITodoItem[];
 }
 
+const data: ITodoItem[] = [
+  {
+    title: 'todo title 1',
+    description: 'description 0',
+    status: true,
+    date: '1652207435533',
+    id: '11',
+  },
 const HomeScreen: FC<RouteModalsProp> = props => {
   console.log(props.todo);
   const data: ITodoItem[] = useMemo(
@@ -88,25 +95,26 @@ const HomeScreen: FC<RouteModalsProp> = props => {
         id: '11',
       },
 
-      {
-        title: 'todo title 5',
-        description: 'description 0',
-        status: false,
-        date: '1672207435533',
-        id: '14',
-      },
-      {
-        title: 'todo title 6',
-        description: 'description 0',
-        status: true,
-        date: '1652207435533',
-        id: '15',
-      },
-    ],
-    [],
-  );
+  {
+    title: 'todo title 5',
+    description: 'description 0',
+    status: false,
+    date: '1672207435533',
+    id: '14',
+  },
+  {
+    title: 'todo title 6',
+    description: 'description 0',
+    status: true,
+    date: '1652207435533',
+    id: '15',
+  },
+];
+
+const HomeScreen: FC<RouteModalsProp> = ({route}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [todos, setTodos] = useState(data);
+
   const setComletedHandler = (todoId: string) => {
     const index = todos.findIndex(todo => todo.id === todoId);
     const todoList = [...todos];
@@ -153,9 +161,11 @@ const HomeScreen: FC<RouteModalsProp> = props => {
         <TouchableOpacity
           style={styles.buttonAddTask}
           onPress={() => {
-            navigation.navigate('Modal');
+            navigation.navigate('ModalNavigator');
           }}>
-          <Text style={styles.buttonText}>+</Text>
+          <Text style={styles.buttonContainer}>
+            <CustomIcon name={'plus'} size={20} />
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

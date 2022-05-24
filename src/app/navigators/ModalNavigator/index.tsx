@@ -1,28 +1,19 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import ModalScreenName from '../../../screens/ModalScreen/ModalScreenName';
-import ModalScreenDescription from '../../../screens/ModalScreen/ModalScreenDescription';
-import ModalScreenDate from '../../../screens/ModalScreen/ModalScreenDate';
+import TodoNameScreen from '../../../screens/TodoNameScreen';
+import TodoDescriptionScreen from '../../../screens/TodoDescriptionScreen';
+import TodoDateScreen from '../../../screens/TodoDateScreen';
 
 const ModalStack = createNativeStackNavigator();
 const ModalNavigator = () => {
   return (
     <ModalStack.Navigator>
+      <ModalStack.Screen name={'ScreenName'} component={TodoNameScreen} />
       <ModalStack.Screen
-        name={'ModalScreenName'}
-        component={ModalScreenName}
-        options={{headerShown: false}}
+        name={'ScreenDescription'}
+        component={TodoDescriptionScreen}
       />
-      <ModalStack.Screen
-        name={'ModalScreenDescription'}
-        component={ModalScreenDescription}
-        options={{headerShown: false}}
-      />
-      <ModalStack.Screen
-        name={'ModalScreenDate'}
-        component={ModalScreenDate}
-        options={{headerShown: false}}
-      />
+      <ModalStack.Screen name={'ScreenDate'} component={TodoDateScreen} />
     </ModalStack.Navigator>
   );
 };
