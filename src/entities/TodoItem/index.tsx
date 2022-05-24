@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
-import {ITodoItem} from '../../app/App';
 import {dateFormatter} from '../../formatters/dateFormatters';
 import List from '../../components/List';
+import {ITodoItem} from '../../store/reducers/rootReducer';
 
 interface TodoItemProps {
   item: ITodoItem;
