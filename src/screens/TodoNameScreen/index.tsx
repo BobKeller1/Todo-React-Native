@@ -65,8 +65,6 @@ const TodoNameScreen = () => {
     });
   };
 
-  console.log(buttonAnim);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: {

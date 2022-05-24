@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useLayoutEffect, useMemo, useState} from 'react';
+import React, {Dispatch, FC, useEffect, useLayoutEffect, useState} from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -15,6 +15,10 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import CustomIcon from '../../components/CustomIcon';
+import {IInitialStore, ITodoItem} from '../../store/reducers/rootReducer';
+import {connect} from 'react-redux';
+import {setCompleted} from '../../store/actions/setCompleted';
+import {addTodo} from '../../store/actions/addTodo';
 
 const styles = StyleSheet.create({
   container: {
@@ -72,60 +76,13 @@ export interface RouteModalsProp {
     {params: {name: string; description: string; post: ITodoItem}},
     'params'
   >;
-  todoArray: ITodoItem[];
+  todo: ITodoItem[];
+  setStatus: (id: string) => void;
+  addTask: (todo: ITodoItem) => void;
 }
 
-const data: ITodoItem[] = [
-  {
-    title: 'todo title 1',
-    description: 'description 0',
-    status: true,
-    date: '1652207435533',
-    id: '11',
-  },
-const HomeScreen: FC<RouteModalsProp> = props => {
-  console.log(props.todo);
-  const data: ITodoItem[] = useMemo(
-    () => [
-      {
-        title: 'todo title 1',
-        description: 'description 0',
-        status: true,
-        date: '1652207435533',
-        id: '11',
-      },
-
-  {
-    title: 'todo title 5',
-    description: 'description 0',
-    status: false,
-    date: '1672207435533',
-    id: '14',
-  },
-  {
-    title: 'todo title 6',
-    description: 'description 0',
-    status: true,
-    date: '1652207435533',
-    id: '15',
-  },
-];
-
-const HomeScreen: FC<RouteModalsProp> = ({route}) => {
+const HomeScreen: FC<RouteModalsProp> = ({route, todo, setStatus, addTask}) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [todos, setTodos] = useState(data);
-
-  const setComletedHandler = (todoId: string) => {
-    const index = todos.findIndex(todo => todo.id === todoId);
-    const todoList = [...todos];
-    todoList[index].status = !todoList[index].status;
-    setTodos(todoList);
-  };
-
-  const addTodo = (todo: ITodoItem) => {
-    setTodos([...todos, todo]);
-  };
-
   const navigation = useNavigation<NavigationProp<any>>();
 
   useLayoutEffect(() => {
@@ -133,10 +90,10 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
   }, [navigation]);
 
   useEffect(() => {
-    if (props.route.params?.post) {
-      addTodo(props.route.params?.post);
+    if (route.params?.post) {
+      addTask(route.params?.post);
     }
-  }, [props.route.params?.post]);
+  }, [route.params?.post]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -150,12 +107,12 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
       </View>
       {searchQuery ? (
         <TodoList
-          data={todos}
+          data={todo}
           searchQuery={searchQuery}
-          onPress={setComletedHandler}
+          onPress={setCompleted}
         />
       ) : (
-        <SectionedTodoList data={todos} onPress={setComletedHandler} />
+        <SectionedTodoList data={todo} onPress={setStatus} />
       )}
       <View style={styles.buttonAddTaskContainer}>
         <TouchableOpacity
@@ -172,9 +129,19 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: IInitialStore) => {
   const {todo} = state;
   return {todo};
 };
 
-export default connect(mapStateToProps)(HomeScreen);
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+  return {
+    setStatus: (id: string) => {
+      dispatch(setCompleted(id));
+    },
+    addTask: (todo: ITodoItem) => {
+      dispatch(addTodo(todo));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

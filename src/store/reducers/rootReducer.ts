@@ -1,3 +1,6 @@
+import {SET_COMPLETED} from '../actions/setCompleted';
+import {ADD_TODO} from '../actions/addTodo';
+
 export interface ITodoItem {
   title: string;
   description: string;
@@ -6,7 +9,7 @@ export interface ITodoItem {
   status: boolean;
 }
 
-interface IInitialStore {
+export interface IInitialStore {
   todo: ITodoItem[];
 }
 
@@ -44,6 +47,15 @@ const initialState: IInitialStore = {
 
 const rootReducer = (state = initialState, action: IActions) => {
   switch (action.type) {
+    case SET_COMPLETED:
+      const index = state.todo.findIndex(
+        todoItem => todoItem.id === action.payload,
+      );
+      const todoList = [...state.todo];
+      todoList[index].status = !todoList[index].status;
+      return {...state, todo: todoList};
+    case ADD_TODO:
+      return {...state, todo: [...state.todo, action.payload]};
     default:
       return state;
   }
