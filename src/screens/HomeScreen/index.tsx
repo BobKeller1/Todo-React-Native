@@ -15,6 +15,7 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import CustomIcon from '../../components/CustomIcon';
+import {v4 as uuidv4} from 'uuid';
 import {IInitialStore, ITodoItem} from '../../store/reducers/rootReducer';
 import {connect} from 'react-redux';
 import {setCompleted} from '../../store/actions/setCompleted';
@@ -52,6 +53,8 @@ const styles = StyleSheet.create({
     borderColor: '#268CC7',
     backgroundColor: '#268CC7',
     borderWidth: 1,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
   },
   buttonAddTask: {
     flexDirection: 'row',
@@ -83,6 +86,20 @@ export interface RouteModalsProp {
 
 const HomeScreen: FC<RouteModalsProp> = ({route, todo, setStatus, addTask}) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [todos, setTodos] = useState(data);
+
+  const setComletedHandler = (todoId: string) => {
+    const index = todos.findIndex(todo => todo.id === todoId);
+    const todoList = [...todos];
+    todoList[index].status = !todoList[index].status;
+    setTodos(todoList);
+  };
+
+  const addTodo = (todo: ITodoItem) => {
+    todo.id = uuidv4();
+    setTodos([...todos, todo]);
+  };
+
   const navigation = useNavigation<NavigationProp<any>>();
 
   useLayoutEffect(() => {
@@ -120,9 +137,9 @@ const HomeScreen: FC<RouteModalsProp> = ({route, todo, setStatus, addTask}) => {
           onPress={() => {
             navigation.navigate('ModalNavigator');
           }}>
-          <Text style={styles.buttonContainer}>
-            <CustomIcon name={'plus'} size={20} />
-          </Text>
+          <View>
+            <CustomIcon name={'plus'} size={20} color={'white'} />
+          </View>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

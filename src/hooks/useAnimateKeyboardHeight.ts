@@ -2,17 +2,17 @@ import {useCallback, useEffect, useRef} from 'react';
 import {Animated} from 'react-native';
 import useKeyboardHeight from './useKeyboardHeight';
 
-const useAnimatedButtonPosition = (
+const useAnimateKeyboardHeight = (
   useNativeDriver: boolean,
   duration: number,
   initialHeight: number,
   indent: number,
 ) => {
   const keyBoardHeight = useKeyboardHeight();
-  const heightWithKeyboard = Number(keyBoardHeight) + indent;
-  const buttonAnim = useRef(new Animated.Value(0)).current;
+  const heightWithKeyboard = keyBoardHeight + indent;
+  const buttonAnim = useRef(new Animated.Value(heightWithKeyboard)).current;
 
-  const position = useCallback(
+  const animatePosition = useCallback(
     height => {
       Animated.timing(buttonAnim, {
         useNativeDriver: useNativeDriver,
@@ -25,13 +25,13 @@ const useAnimatedButtonPosition = (
 
   useEffect(() => {
     if (Number(keyBoardHeight) !== 0) {
-      position(heightWithKeyboard);
+      animatePosition(heightWithKeyboard);
     } else {
-      position(initialHeight);
+      animatePosition(initialHeight);
     }
-  }, [heightWithKeyboard, indent, initialHeight, keyBoardHeight, position]);
+  }, [heightWithKeyboard, indent, initialHeight, keyBoardHeight]);
 
   return buttonAnim;
 };
 
-export default useAnimatedButtonPosition;
+export default useAnimateKeyboardHeight;
