@@ -106,11 +106,7 @@ const HomeScreen: FC<RouteModalsProp> = ({route, todo, setStatus, addTask}) => {
         />
       </View>
       {searchQuery ? (
-        <TodoList
-          data={todo}
-          searchQuery={searchQuery}
-          onPress={setCompleted}
-        />
+        <TodoList data={todo} searchQuery={searchQuery} onPress={setStatus} />
       ) : (
         <SectionedTodoList data={todo} onPress={setStatus} />
       )}
