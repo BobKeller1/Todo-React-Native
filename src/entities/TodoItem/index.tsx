@@ -1,11 +1,18 @@
 import React, {FC} from 'react';
 import {dateFormatter} from '../../formatters/dateFormatters';
 import List from '../../components/List';
-import {ITodoItem} from '../../store/reducers/rootReducer';
 
 interface TodoItemProps {
   item: ITodoItem;
   onPress: () => void;
+}
+
+export interface ITodoItem {
+  title: string;
+  description: string;
+  date: string;
+  id: string;
+  status: boolean;
 }
 
 const TodoItem: FC<TodoItemProps> = ({item, onPress}) => {
