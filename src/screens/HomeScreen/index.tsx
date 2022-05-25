@@ -41,16 +41,26 @@ export interface RouteModalsProp {
     'params'
   >;
   todo: ITodoItem[];
+  undo: {
+    isShow: boolean;
+  };
   setStatus: (id: string) => void;
   addTask: (todo: ITodoItem) => void;
 }
 
-const HomeScreen: FC<RouteModalsProp> = ({route, todo, setStatus, addTask}) => {
+const HomeScreen: FC<RouteModalsProp> = ({
+  route,
+  todo,
+  setStatus,
+  addTask,
+  undo,
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation<NavigationProp<any>>();
+  const {isShow} = undo;
 
   const toCreateTodo = () => navigation.navigate('ModalNavigator');
-  const undo = () => console.log(undo);
+  const undoHandler = () => console.log(undo);
 
   useLayoutEffect(() => {
     navigation.setOptions({title: 'Главный экран'});
@@ -84,20 +94,22 @@ const HomeScreen: FC<RouteModalsProp> = ({route, todo, setStatus, addTask}) => {
         icon={'plus'}
         onPress={toCreateTodo}
       />
-      <CircleButtons
-        right={310}
-        borderColor={'black'}
-        backgroundColor={'black'}
-        icon={'undo2'}
-        onPress={undo}
-      />
+      {isShow && (
+        <CircleButtons
+          right={310}
+          borderColor={'black'}
+          backgroundColor={'black'}
+          icon={'undo2'}
+          onPress={undoHandler}
+        />
+      )}
     </SafeAreaView>
   );
 };
 
 const mapStateToProps = (state: IInitialStore) => {
-  const {todo} = state;
-  return {todo};
+  const {todo, undo} = state;
+  return {todo, undo};
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {

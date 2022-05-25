@@ -1,5 +1,6 @@
 import {SET_COMPLETED} from '../actions/setCompleted';
 import {ADD_TODO} from '../actions/addTodo';
+import {HIDE_UNDO, SHOW_UNDO} from '../actions/undo';
 
 export interface ITodoItem {
   title: string;
@@ -11,6 +12,9 @@ export interface ITodoItem {
 
 export interface IInitialStore {
   todo: ITodoItem[];
+  undo: {
+    isShow: boolean;
+  };
 }
 
 interface IActions {
@@ -43,6 +47,9 @@ const initialState: IInitialStore = {
       id: '15',
     },
   ],
+  undo: {
+    isShow: false,
+  },
 };
 
 const rootReducer = (state = initialState, action: IActions) => {
@@ -56,6 +63,10 @@ const rootReducer = (state = initialState, action: IActions) => {
       return {...state, todo: todoList};
     case ADD_TODO:
       return {...state, todo: [...state.todo, action.payload]};
+    case SHOW_UNDO:
+      return {...state, undo: {isShow: true}};
+    case HIDE_UNDO:
+      return {...state, undo: {isShow: false}};
     default:
       return state;
   }
