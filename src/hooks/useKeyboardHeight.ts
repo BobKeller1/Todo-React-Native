@@ -2,9 +2,9 @@ import {useCallback, useEffect, useState} from 'react';
 import {Keyboard} from 'react-native';
 
 const useKeyboardHeight = (
-  didShow?: (keyboardHeight?: Number) => void,
+  didShow?: (keyboardHeight?: number) => void,
   didHide?: (x: number) => void,
-): Number => {
+): number => {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const onKeyboardDidShow = useCallback(
