@@ -5,15 +5,15 @@ function* undoWorker(action) {
   const todoId = action.payload;
   yield put(showUndo());
 
-  const {undo, archive} = yield race({
+  const {undo, timeout} = yield race({
     undo: take(action => action.type === ACTIONS.UNDO),
-    archive: delay(3000),
+    timeout: delay(3000),
   });
   yield put(hideUndo());
 
   if (undo) {
     yield put(undoStatus(todoId));
-  } else if (archive) {
+  } else if (timeout) {
     //  ничего не делать
   }
 }
