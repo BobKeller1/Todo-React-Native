@@ -1,7 +1,7 @@
 import {testSaga} from './testSaga';
-import {all, call, delay} from 'redux-saga/effects';
+import {all, call} from 'redux-saga/effects';
 
 export default function* rootSaga() {
-  yield delay(2000);
+  console.log('саги запущены');
   yield all([call(testSaga)]);
 }
