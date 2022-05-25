@@ -1,12 +1,5 @@
 import React, {Dispatch, FC, useEffect, useLayoutEffect, useState} from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import {StyleSheet, TextInput, View, SafeAreaView} from 'react-native';
 import TodoList from './components/TodoList';
 import SectionedTodoList from './components/SectionedTodoList';
 import {
@@ -14,11 +7,11 @@ import {
   RouteProp,
   useNavigation,
 } from '@react-navigation/native';
-import CustomIcon from '../../components/CustomIcon';
 import {IInitialStore, ITodoItem} from '../../store/reducers/rootReducer';
 import {connect} from 'react-redux';
 import {setCompleted} from '../../store/actions/setCompleted';
 import {addTodo} from '../../store/actions/addTodo';
+import CircleButtons from './components/CircleButtons';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,35 +33,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'rgba(250, 250, 250, 0.93);',
   },
-  buttonAddTaskContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: 60,
-    height: 60,
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    borderRadius: 100,
-    borderColor: '#268CC7',
-    backgroundColor: '#268CC7',
-    borderWidth: 1,
-  },
-  buttonAddTask: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: 60,
-    height: 60,
-    paddingVertical: 9,
-    paddingHorizontal: 16,
-    borderRadius: 100,
-    borderColor: '#268CC7',
-    backgroundColor: '#268CC7',
-    borderWidth: 1,
-  },
-  buttonContainer: {
-    color: 'white',
-    paddingTop: 8,
-  },
 });
 
 export interface RouteModalsProp {
@@ -84,6 +48,9 @@ export interface RouteModalsProp {
 const HomeScreen: FC<RouteModalsProp> = ({route, todo, setStatus, addTask}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation<NavigationProp<any>>();
+
+  const toCreateTodo = () => navigation.navigate('ModalNavigator');
+  const undo = () => console.log(undo);
 
   useLayoutEffect(() => {
     navigation.setOptions({title: 'Главный экран'});
@@ -110,17 +77,20 @@ const HomeScreen: FC<RouteModalsProp> = ({route, todo, setStatus, addTask}) => {
       ) : (
         <SectionedTodoList data={todo} onPress={setStatus} />
       )}
-      <View style={styles.buttonAddTaskContainer}>
-        <TouchableOpacity
-          style={styles.buttonAddTask}
-          onPress={() => {
-            navigation.navigate('ModalNavigator');
-          }}>
-          <Text style={styles.buttonContainer}>
-            <CustomIcon name={'plus'} size={20} />
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <CircleButtons
+        right={20}
+        borderColor={'#268CC7'}
+        backgroundColor={'#268CC7'}
+        icon={'plus'}
+        onPress={toCreateTodo}
+      />
+      <CircleButtons
+        right={310}
+        borderColor={'black'}
+        backgroundColor={'black'}
+        icon={'undo2'}
+        onPress={undo}
+      />
     </SafeAreaView>
   );
 };
