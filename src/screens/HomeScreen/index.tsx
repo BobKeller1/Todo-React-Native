@@ -1,11 +1,5 @@
 import React, {Dispatch, FC, useLayoutEffect, useState} from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, TextInput, View, SafeAreaView} from 'react-native';
 import TodoList from './components/TodoList';
 import SectionedTodoList from './components/SectionedTodoList';
 import {
@@ -13,11 +7,11 @@ import {
   RouteProp,
   useNavigation,
 } from '@react-navigation/native';
-import CustomIcon from '../../components/CustomIcon';
 import {connect} from 'react-redux';
 import {ITodoItem} from '../../entities/TodoItem';
 import {IInitialStore} from '../../store/reducers/rootReducer';
-import {toggleStatus} from '../../store/actions';
+import {toggleStatus, undoTodo} from '../../store/actions';
+import CircleButtons from './components/CircleButtons';
 
 const styles = StyleSheet.create({
   container: {
@@ -75,12 +69,19 @@ export interface IHomeScreenProp {
   undoTask: () => void;
 }
 
-const HomeScreen: FC<IHomeScreenProp> = ({todo, toggleCompleted}) => {
+const HomeScreen: FC<IHomeScreenProp> = ({
+  todo,
+  toggleCompleted,
+  undo,
+  undoTask,
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation<NavigationProp<any>>();
   const {isShow} = undo;
-
   const onPressUndo = () => undoTask();
+  const toCreateTodo = () =>
+    navigation.navigate('ModalNavigator', {screen: 'TodoNameScreen'});
+
   useLayoutEffect(() => {
     navigation.setOptions({title: 'Главный экран'});
   }, [navigation]);
@@ -104,17 +105,17 @@ const HomeScreen: FC<IHomeScreenProp> = ({todo, toggleCompleted}) => {
       ) : (
         <SectionedTodoList data={todo} onPress={toggleCompleted} />
       )}
-      <View style={styles.buttonAddTaskContainer}>
-        <TouchableOpacity
-          style={styles.buttonAddTask}
-          onPress={() => {
-            navigation.navigate('ModalNavigator');
-          }}>
-          <View>
-            <CustomIcon name={'plus'} size={20} color={'white'} />
-          </View>
-        </TouchableOpacity>
-      </View>
+      {/*<View style={styles.buttonAddTaskContainer}>*/}
+      {/*  <TouchableOpacity*/}
+      {/*    style={styles.buttonAddTask}*/}
+      {/*    onPress={() => {*/}
+      {/*      navigation.navigate('ModalNavigator');*/}
+      {/*    }}>*/}
+      {/*    <View>*/}
+      {/*      <CustomIcon name={'plus'} size={20} color={'white'} />*/}
+      {/*    </View>*/}
+      {/*  </TouchableOpacity>*/}
+      {/*</View>*/}
       <CircleButtons
         right={20}
         borderColor={'#268CC7'}
