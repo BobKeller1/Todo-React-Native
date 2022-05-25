@@ -1,11 +1,26 @@
-import {put, delay, takeLatest} from 'redux-saga/effects';
+import {put, delay, takeLatest, race, take} from 'redux-saga/effects';
 import {hideUndo, showUndo} from '../actions/undo';
-import {SET_COMPLETED} from '../actions/setCompleted';
+import {SET_COMPLETED, setCompleted} from '../actions/setCompleted';
 
-function* undoWorker() {
+function* undoWorker(action) {
+  const todoId = action.payload;
+  console.log(todoId);
   yield put(showUndo());
-  yield delay(3000);
+
+  const {undo, archive} = yield race({
+    undo: take(action => action.type === 'UNDO'),
+    archive: delay(3000),
+  });
   yield put(hideUndo());
+
+  console.log(undo, archive);
+
+  if (undo) {
+    //TODO: другой экшн, чтобы не использовать снова SET_COMPLETED
+    yield put(setCompleted(todoId));
+  } else if (archive) {
+    //  ничего не делать
+  }
 }
 
 function* undoWatcher() {

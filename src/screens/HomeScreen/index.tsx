@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import {setCompleted} from '../../store/actions/setCompleted';
 import {addTodo} from '../../store/actions/addTodo';
 import CircleButtons from './components/CircleButtons';
+import {undoTodo} from '../../store/actions/undo';
 
 const styles = StyleSheet.create({
   container: {
@@ -46,6 +47,7 @@ export interface RouteModalsProp {
   };
   setStatus: (id: string) => void;
   addTask: (todo: ITodoItem) => void;
+  undoTask: () => void;
 }
 
 const HomeScreen: FC<RouteModalsProp> = ({
@@ -54,14 +56,14 @@ const HomeScreen: FC<RouteModalsProp> = ({
   setStatus,
   addTask,
   undo,
+  undoTask,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation<NavigationProp<any>>();
   const {isShow} = undo;
 
   const toCreateTodo = () => navigation.navigate('ModalNavigator');
-  const undoHandler = () => console.log(undo);
-
+  const onPressUndo = () => undoTask();
   useLayoutEffect(() => {
     navigation.setOptions({title: 'Главный экран'});
   }, [navigation]);
@@ -100,7 +102,7 @@ const HomeScreen: FC<RouteModalsProp> = ({
           borderColor={'black'}
           backgroundColor={'black'}
           icon={'undo2'}
-          onPress={undoHandler}
+          onPress={onPressUndo}
         />
       )}
     </SafeAreaView>
@@ -119,6 +121,9 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => {
     },
     addTask: (todo: ITodoItem) => {
       dispatch(addTodo(todo));
+    },
+    undoTask: () => {
+      dispatch(undoTodo());
     },
   };
 };
