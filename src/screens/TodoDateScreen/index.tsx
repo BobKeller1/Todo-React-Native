@@ -4,7 +4,7 @@ import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import {RouteModalsProp} from '../HomeScreen';
-import ModalButtons from '../../components/ModalButtons';
+import OutlineButton from '../../components/OutlineButton';
 import {useNavigation} from '@react-navigation/native';
 import {formatToTimestamp} from '../../formatters/dateFormatters';
 
@@ -26,27 +26,10 @@ const styles = StyleSheet.create({
   timePicker: {
     flex: 1,
   },
-  buttonNext: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+  buttonContainer: {
     position: 'absolute',
-    bottom: 60,
-    right: 40,
-    width: 70,
-    height: 40,
-    paddingTop: 9,
-    paddingRight: 16,
-    paddingBottom: 9,
-    paddingLeft: 16,
-    borderRadius: 100,
-    borderColor: '#268CC7',
-    borderWidth: 1,
-  },
-  buttonCreateTodo: {
-    borderColor: 'green',
-  },
-  buttonNextDisabled: {
-    borderColor: 'gray',
+    right: 120,
+    bottom: 100,
   },
 });
 
@@ -68,7 +51,6 @@ const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
     description,
     status: false,
     date: formatToTimestamp(date),
-    id: Date.now().toString(),
   };
 
   const onChange = (event: DateTimePickerEvent, selectedDate: Date | any) => {
@@ -80,9 +62,7 @@ const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
       headerStyle: {
         backgroundColor: '#beb9b9',
       },
-      headerLeft: () => (
-        <Button onPress={() => navigation.pop()} title="Назад" />
-      ),
+      headerLeft: () => <Button onPress={navigation.goBack} title="Назад" />,
       title: 'Добавить дату',
     });
   }, [navigation]);
@@ -100,8 +80,8 @@ const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
           style={styles.timePicker}
         />
       </View>
-      <View style={[styles.buttonNext, styles.buttonCreateTodo]}>
-        <ModalButtons navigateHandler={navigateToHome} color="green" />
+      <View style={[styles.buttonContainer]}>
+        <OutlineButton onPress={navigateToHome} color="green" />
       </View>
     </View>
   );

@@ -7,8 +7,8 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import ModalButtons from '../../components/ModalButtons';
-import useAnimatedButtonPosition from '../../hooks/useAnimatedButtonPosition';
+import OutlineButton from '../../components/OutlineButton';
+import useAnimateKeyboardHeight from '../../hooks/useAnimateKeyboardHeight';
 import {useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
@@ -29,26 +29,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
   },
-  buttonNext: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+  buttonContainer: {
     position: 'absolute',
-    right: 40,
-    width: 70,
-    height: 40,
-    paddingTop: 9,
-    paddingRight: 16,
-    paddingBottom: 9,
-    paddingLeft: 16,
-    borderRadius: 100,
-    borderColor: '#268CC7',
-    borderWidth: 1,
-  },
-  buttonCreateTodo: {
-    borderColor: 'green',
-  },
-  buttonNextDisabled: {
-    borderColor: 'gray',
+    right: 120,
   },
 });
 
@@ -57,7 +40,7 @@ const TodoNameScreen = () => {
   const navigation = useNavigation<any>();
   const isValid = name.length === 0;
 
-  const buttonAnim = useAnimatedButtonPosition(false, 300, 60, 10);
+  const buttonAnim = useAnimateKeyboardHeight(false, 300, 100, 50);
 
   const navigateToDescription = () => {
     navigation.push('ScreenDescription', {
@@ -65,16 +48,12 @@ const TodoNameScreen = () => {
     });
   };
 
-  console.log(buttonAnim);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: {
         backgroundColor: '#beb9b9',
       },
-      headerLeft: () => (
-        <Button onPress={() => navigation.goBack()} title="Закрыть" />
-      ),
+      headerLeft: () => <Button onPress={navigation.goBack} title="Закрыть" />,
       title: 'Добавить задачу',
     });
   }, [navigation]);
@@ -92,15 +71,14 @@ const TodoNameScreen = () => {
       </View>
       <Animated.View
         style={[
-          styles.buttonNext,
-          isValid && styles.buttonNextDisabled,
+          styles.buttonContainer,
           {
             bottom: buttonAnim,
           },
         ]}>
-        <ModalButtons
+        <OutlineButton
           isValid={isValid}
-          navigateHandler={navigateToDescription}
+          onPress={navigateToDescription}
           buttonAnim={buttonAnim}
           color={'primary'}
         />

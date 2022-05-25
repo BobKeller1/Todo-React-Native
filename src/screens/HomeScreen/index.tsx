@@ -5,7 +5,6 @@ import {
   View,
   SafeAreaView,
   TouchableOpacity,
-  Text,
 } from 'react-native';
 import TodoList from './components/TodoList';
 import SectionedTodoList from './components/SectionedTodoList';
@@ -16,6 +15,7 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import CustomIcon from '../../components/CustomIcon';
+import {v4 as uuidv4} from 'uuid';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,8 +40,6 @@ const styles = StyleSheet.create({
   buttonAddTaskContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    width: 60,
-    height: 60,
     position: 'absolute',
     bottom: 20,
     right: 20,
@@ -49,22 +47,16 @@ const styles = StyleSheet.create({
     borderColor: '#268CC7',
     backgroundColor: '#268CC7',
     borderWidth: 1,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
   },
   buttonAddTask: {
     flexDirection: 'row',
     justifyContent: 'center',
-    width: 60,
-    height: 60,
-    paddingVertical: 9,
-    paddingHorizontal: 16,
     borderRadius: 100,
     borderColor: '#268CC7',
     backgroundColor: '#268CC7',
     borderWidth: 1,
-  },
-  buttonContainer: {
-    color: 'white',
-    paddingTop: 8,
   },
 });
 
@@ -112,6 +104,7 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
   };
 
   const addTodo = (todo: ITodoItem) => {
+    todo.id = uuidv4();
     setTodos([...todos, todo]);
   };
 
@@ -150,11 +143,11 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
         <TouchableOpacity
           style={styles.buttonAddTask}
           onPress={() => {
-            navigation.navigate('ModalNavigator');
+            navigation.navigate('ModalNavigator', {screen: 'TodoNameScreen'});
           }}>
-          <Text style={styles.buttonContainer}>
-            <CustomIcon name={'plus'} size={20} />
-          </Text>
+          <View>
+            <CustomIcon name={'plus'} size={20} color={'white'} />
+          </View>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

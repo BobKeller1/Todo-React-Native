@@ -8,8 +8,8 @@ import {
   Button,
 } from 'react-native';
 import {RouteModalsProp} from '../HomeScreen';
-import ModalButtons from '../../components/ModalButtons';
-import useAnimatedButtonPosition from '../../hooks/useAnimatedButtonPosition';
+import OutlineButton from '../../components/OutlineButton';
+import useAnimateKeyboardHeight from '../../hooks/useAnimateKeyboardHeight';
 import {useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
@@ -30,26 +30,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
   },
-  buttonNext: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+  buttonContainer: {
     position: 'absolute',
-    right: 40,
-    width: 70,
-    height: 40,
-    paddingTop: 9,
-    paddingRight: 16,
-    paddingBottom: 9,
-    paddingLeft: 16,
-    borderRadius: 100,
-    borderColor: '#268CC7',
-    borderWidth: 1,
-  },
-  buttonCreateTodo: {
-    borderColor: 'green',
-  },
-  buttonNextDisabled: {
-    borderColor: 'gray',
+    right: 120,
   },
 });
 
@@ -65,16 +48,14 @@ const TodoDescriptionScreen: FC<RouteModalsProp> = ({route}) => {
     });
   };
 
-  const buttonAnim = useAnimatedButtonPosition(false, 300, 60, 10);
+  const buttonAnim = useAnimateKeyboardHeight(false, 300, 100, 50);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: {
         backgroundColor: '#beb9b9',
       },
-      headerLeft: () => (
-        <Button onPress={() => navigation.pop()} title="Назад" />
-      ),
+      headerLeft: () => <Button onPress={navigation.goBack} title="Назад" />,
       title: 'Добавить описание',
     });
   }, [navigation]);
@@ -92,14 +73,14 @@ const TodoDescriptionScreen: FC<RouteModalsProp> = ({route}) => {
       </View>
       <Animated.View
         style={[
-          styles.buttonNext,
+          styles.buttonContainer,
           {
             bottom: buttonAnim,
           },
         ]}>
-        <ModalButtons
+        <OutlineButton
           buttonAnim={buttonAnim}
-          navigateHandler={navigateToDate}
+          onPress={navigateToDate}
           color={'primary'}
         />
       </Animated.View>
