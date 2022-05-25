@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
 });
 
-enum Colors {
+export enum Colors {
   Primary = 'primary',
   Disabled = 'disabled',
   Green = 'green',

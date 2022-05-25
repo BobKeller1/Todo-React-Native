@@ -1,9 +1,9 @@
 import React, {Dispatch, FC, useLayoutEffect, useState} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import OutlineButton from '../../components/OutlineButton';
+import OutlineButton, {Colors} from '../../components/OutlineButton';
 import {RouteProp, useNavigation} from '@react-navigation/native';
 import {formatToTimestamp} from '../../formatters/dateFormatters';
 import {connect} from 'react-redux';
@@ -95,7 +95,7 @@ const TodoDateScreen: FC<ITodoDateScreenProp> = ({route, addTask}) => {
         />
       </View>
       <View style={[styles.buttonContainer]}>
-        <OutlineButton onPress={onPress} color="green" />
+        <OutlineButton onPress={onPress} color={Colors.Green} />
       </View>
     </View>
   );
