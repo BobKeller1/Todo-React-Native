@@ -1,13 +1,6 @@
-import {SET_COMPLETED} from '../actions/setCompleted';
-import {ADD_TODO} from '../actions/addTodo';
-
-export interface ITodoItem {
-  title: string;
-  description: string;
-  date: string;
-  id: string;
-  status: boolean;
-}
+import {ITodoItem} from '../../entities/TodoItem';
+import ACTIONS from '../actions';
+import {generateId} from '../../utils/generateId';
 
 export interface IInitialStore {
   todo: ITodoItem[];
@@ -47,15 +40,16 @@ const initialState: IInitialStore = {
 
 const rootReducer = (state = initialState, action: IActions) => {
   switch (action.type) {
-    case SET_COMPLETED:
+    case ACTIONS.TOGGLE_STATUS:
       const index = state.todo.findIndex(
         todoItem => todoItem.id === action.payload,
       );
       const todoList = [...state.todo];
       todoList[index].status = !todoList[index].status;
       return {...state, todo: todoList};
-    case ADD_TODO:
-      return {...state, todo: [...state.todo, action.payload]};
+    case ACTIONS.ADD_TODO:
+      const todo = generateId(action.payload);
+      return {...state, todo: [...state.todo, todo]};
     default:
       return state;
   }

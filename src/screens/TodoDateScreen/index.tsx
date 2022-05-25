@@ -1,12 +1,13 @@
-import React, {FC, useLayoutEffect, useState} from 'react';
+import React, {Dispatch, FC, useLayoutEffect, useState} from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import DateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
-import {RouteModalsProp} from '../HomeScreen';
 import OutlineButton from '../../components/OutlineButton';
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation} from '@react-navigation/native';
 import {formatToTimestamp} from '../../formatters/dateFormatters';
+import {connect} from 'react-redux';
+import {addTodo} from '../../store/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,18 +34,22 @@ const styles = StyleSheet.create({
   },
 });
 
-const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
+export interface ITaskItem {
+  title: string;
+  description: string;
+  status: boolean;
+  date: string;
+}
+
+interface ITodoDateScreenProp {
+  route: RouteProp<{params: {name: string; description: string}}, 'params'>;
+  addTask: (todo: ITaskItem) => void;
+}
+
+const TodoDateScreen: FC<ITodoDateScreenProp> = ({route, addTask}) => {
   const {name, description} = route.params;
   const [date, setDate] = useState<Date>(new Date(Date.now()));
   const navigation = useNavigation<any>();
-
-  const navigateToHome = () => {
-    navigation.navigate({
-      name: 'HomeScreen',
-      params: {post: todo},
-      merge: true,
-    });
-  };
 
   const todo = {
     title: name,
@@ -55,6 +60,15 @@ const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
 
   const onChange = (event: DateTimePickerEvent, selectedDate: Date | any) => {
     setDate(selectedDate);
+  };
+
+  const onPress = () => {
+    addTask(todo);
+    navigation.navigate({
+      name: 'HomeScreen',
+      params: {post: todo},
+      merge: true,
+    });
   };
 
   useLayoutEffect(() => {
@@ -81,10 +95,18 @@ const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
         />
       </View>
       <View style={[styles.buttonContainer]}>
-        <OutlineButton onPress={navigateToHome} color="green" />
+        <OutlineButton onPress={onPress} color="green" />
       </View>
     </View>
   );
 };
 
-export default TodoDateScreen;
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+  return {
+    addTask: (todo: ITaskItem) => {
+      dispatch(addTodo(todo));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(TodoDateScreen);

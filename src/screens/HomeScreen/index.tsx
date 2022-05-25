@@ -1,11 +1,10 @@
-import React, {Dispatch, FC, useEffect, useLayoutEffect, useState} from 'react';
+import React, {Dispatch, FC, useLayoutEffect, useState} from 'react';
 import {
   StyleSheet,
   TextInput,
   View,
   SafeAreaView,
   TouchableOpacity,
-  Text,
 } from 'react-native';
 import TodoList from './components/TodoList';
 import SectionedTodoList from './components/SectionedTodoList';
@@ -15,11 +14,10 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import CustomIcon from '../../components/CustomIcon';
-import {v4 as uuidv4} from 'uuid';
-import {IInitialStore, ITodoItem} from '../../store/reducers/rootReducer';
 import {connect} from 'react-redux';
-import {setCompleted} from '../../store/actions/setCompleted';
-import {addTodo} from '../../store/actions/addTodo';
+import {ITodoItem} from '../../entities/TodoItem';
+import {IInitialStore} from '../../store/reducers/rootReducer';
+import {toggleStatus} from '../../store/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -44,8 +42,6 @@ const styles = StyleSheet.create({
   buttonAddTaskContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    width: 60,
-    height: 60,
     position: 'absolute',
     bottom: 20,
     right: 20,
@@ -59,58 +55,29 @@ const styles = StyleSheet.create({
   buttonAddTask: {
     flexDirection: 'row',
     justifyContent: 'center',
-    width: 60,
-    height: 60,
-    paddingVertical: 9,
-    paddingHorizontal: 16,
     borderRadius: 100,
     borderColor: '#268CC7',
     backgroundColor: '#268CC7',
-    borderWidth: 1,
-  },
-  buttonContainer: {
-    color: 'white',
-    paddingTop: 8,
   },
 });
 
-export interface RouteModalsProp {
+export interface IHomeScreenProp {
   route: RouteProp<
     {params: {name: string; description: string; post: ITodoItem}},
     'params'
   >;
   todo: ITodoItem[];
-  setStatus: (id: string) => void;
+  toggleCompleted: (id: string) => void;
   addTask: (todo: ITodoItem) => void;
 }
 
-const HomeScreen: FC<RouteModalsProp> = ({route, todo, setStatus, addTask}) => {
+const HomeScreen: FC<IHomeScreenProp> = ({todo, toggleCompleted}) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [todos, setTodos] = useState(data);
-
-  const setComletedHandler = (todoId: string) => {
-    const index = todos.findIndex(todo => todo.id === todoId);
-    const todoList = [...todos];
-    todoList[index].status = !todoList[index].status;
-    setTodos(todoList);
-  };
-
-  const addTodo = (todo: ITodoItem) => {
-    todo.id = uuidv4();
-    setTodos([...todos, todo]);
-  };
-
   const navigation = useNavigation<NavigationProp<any>>();
 
   useLayoutEffect(() => {
     navigation.setOptions({title: 'Главный экран'});
   }, [navigation]);
-
-  useEffect(() => {
-    if (route.params?.post) {
-      addTask(route.params?.post);
-    }
-  }, [route.params?.post]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -126,10 +93,10 @@ const HomeScreen: FC<RouteModalsProp> = ({route, todo, setStatus, addTask}) => {
         <TodoList
           data={todo}
           searchQuery={searchQuery}
-          onPress={setCompleted}
+          onPress={toggleCompleted}
         />
       ) : (
-        <SectionedTodoList data={todo} onPress={setStatus} />
+        <SectionedTodoList data={todo} onPress={toggleCompleted} />
       )}
       <View style={styles.buttonAddTaskContainer}>
         <TouchableOpacity
@@ -153,11 +120,8 @@ const mapStateToProps = (state: IInitialStore) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
-    setStatus: (id: string) => {
-      dispatch(setCompleted(id));
-    },
-    addTask: (todo: ITodoItem) => {
-      dispatch(addTodo(todo));
+    toggleCompleted: (id: string) => {
+      dispatch(toggleStatus(id));
     },
   };
 };
