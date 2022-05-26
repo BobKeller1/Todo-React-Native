@@ -14,9 +14,8 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import CustomIcon from '../../components/CustomIcon';
-import {v4 as uuidv4} from 'uuid';
-import {ITodo, Todo} from '../../entities/TodoItem';
 import {generateId} from '../../utils/generateId';
+import {ITodoItem, TodoData} from '../../entities/TodoItem';
 
 const styles = StyleSheet.create({
   container: {
@@ -63,12 +62,12 @@ const styles = StyleSheet.create({
 
 export interface RouteModalsProp {
   route: RouteProp<
-    {params: {name: string; description: string; post: Todo}},
+    {params: {name: string; description: string; post: TodoData}},
     'params'
   >;
 }
 
-const data: ITodo[] = [
+const data: ITodoItem[] = [
   {
     title: 'todo title 1',
     description: 'description 0',
@@ -104,7 +103,7 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
     setTodos(todoList);
   };
 
-  const addTodo = (todo: Todo) => {
+  const addTodo = (todo: TodoData) => {
     const id = generateId();
     const newTodo = {...todo, id};
     setTodos([...todos, newTodo]);
