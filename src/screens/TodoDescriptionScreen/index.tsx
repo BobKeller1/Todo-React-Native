@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    right: 120,
+    right: 30,
   },
 });
 
@@ -51,7 +51,7 @@ const TodoDescriptionScreen: FC<ITodoDescriptionScreenProp> = ({route}) => {
     });
   };
 
-  const buttonAnim = useAnimateKeyboardHeight(false, 300, 100, 50);
+  const buttonAnim = useAnimateKeyboardHeight(false, 300, 70, 50);
 
   useLayoutEffect(() => {
     navigation.setOptions({
