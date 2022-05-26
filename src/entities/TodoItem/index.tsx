@@ -1,12 +1,21 @@
 import React, {FC} from 'react';
-import {ITodoItem} from '../../app/App';
 import {dateFormatter} from '../../formatters/dateFormatters';
 import List from '../../components/List';
 
 interface TodoItemProps {
-  item: ITodoItem;
+  item: ITodo;
   onPress: () => void;
 }
+
+export interface ITodo {
+  title: string;
+  description: string;
+  date: string;
+  status: boolean;
+  id: string;
+}
+
+export type Todo = Omit<ITodo, 'id'>;
 
 const TodoItem: FC<TodoItemProps> = ({item, onPress}) => {
   const {status, description, title, date} = item;

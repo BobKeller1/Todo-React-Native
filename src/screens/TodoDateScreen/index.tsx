@@ -1,12 +1,10 @@
-import React, {FC, useLayoutEffect, useState} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker';
-import {RouteModalsProp} from '../HomeScreen';
-import OutlineButton from '../../components/OutlineButton';
-import {useNavigation} from '@react-navigation/native';
-import {formatToTimestamp} from '../../formatters/dateFormatters';
+import React, { FC, useLayoutEffect, useState } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
+import { RouteModalsProp } from "../HomeScreen";
+import OutlineButton, { Colors } from "../../components/OutlineButton";
+import { useNavigation } from "@react-navigation/native";
+import { formatToTimestamp } from "../../formatters/dateFormatters";
 
 const styles = StyleSheet.create({
   container: {
@@ -28,8 +26,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    right: 120,
-    bottom: 100,
+    right: 30,
+    bottom: 70,
   },
 });
 
@@ -81,7 +79,7 @@ const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
         />
       </View>
       <View style={[styles.buttonContainer]}>
-        <OutlineButton onPress={navigateToHome} color="green" />
+        <OutlineButton onPress={navigateToHome} color={Colors.Green} />
       </View>
     </View>
   );

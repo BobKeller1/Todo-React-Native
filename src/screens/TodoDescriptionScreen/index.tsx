@@ -8,7 +8,7 @@ import {
   Button,
 } from 'react-native';
 import {RouteModalsProp} from '../HomeScreen';
-import OutlineButton from '../../components/OutlineButton';
+import OutlineButton, {Colors} from '../../components/OutlineButton';
 import useAnimateKeyboardHeight from '../../hooks/useAnimateKeyboardHeight';
 import {useNavigation} from '@react-navigation/native';
 
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    right: 120,
+    right: 30,
   },
 });
 
@@ -48,7 +48,7 @@ const TodoDescriptionScreen: FC<RouteModalsProp> = ({route}) => {
     });
   };
 
-  const buttonAnim = useAnimateKeyboardHeight(false, 300, 100, 50);
+  const buttonAnim = useAnimateKeyboardHeight(false, 300, 70, 50);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -78,11 +78,7 @@ const TodoDescriptionScreen: FC<RouteModalsProp> = ({route}) => {
             bottom: buttonAnim,
           },
         ]}>
-        <OutlineButton
-          buttonAnim={buttonAnim}
-          onPress={navigateToDate}
-          color={'primary'}
-        />
+        <OutlineButton onPress={navigateToDate} color={Colors.Primary} />
       </Animated.View>
     </View>
   );

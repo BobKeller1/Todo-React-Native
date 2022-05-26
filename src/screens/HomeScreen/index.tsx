@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import TodoList from './components/TodoList';
 import SectionedTodoList from './components/SectionedTodoList';
-import {ITodoItem} from '../../app/App';
 import {
   NavigationProp,
   RouteProp,
@@ -16,6 +15,8 @@ import {
 } from '@react-navigation/native';
 import CustomIcon from '../../components/CustomIcon';
 import {v4 as uuidv4} from 'uuid';
+import {ITodo, Todo} from '../../entities/TodoItem';
+import {generateId} from '../../utils/generateId';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,12 +63,12 @@ const styles = StyleSheet.create({
 
 export interface RouteModalsProp {
   route: RouteProp<
-    {params: {name: string; description: string; post: ITodoItem}},
+    {params: {name: string; description: string; post: Todo}},
     'params'
   >;
 }
 
-const data: ITodoItem[] = [
+const data: ITodo[] = [
   {
     title: 'todo title 1',
     description: 'description 0',
@@ -103,9 +104,10 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
     setTodos(todoList);
   };
 
-  const addTodo = (todo: ITodoItem) => {
-    todo.id = uuidv4();
-    setTodos([...todos, todo]);
+  const addTodo = (todo: Todo) => {
+    const id = generateId();
+    const newTodo = {...todo, id};
+    setTodos([...todos, newTodo]);
   };
 
   const navigation = useNavigation<NavigationProp<any>>();
@@ -145,9 +147,7 @@ const HomeScreen: FC<RouteModalsProp> = ({route}) => {
           onPress={() => {
             navigation.navigate('ModalNavigator', {screen: 'TodoNameScreen'});
           }}>
-          <View>
-            <CustomIcon name={'plus'} size={20} color={'white'} />
-          </View>
+          <CustomIcon name={'plus'} size={20} color={'white'} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
