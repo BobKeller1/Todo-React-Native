@@ -14,11 +14,10 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import CustomIcon from '../../components/CustomIcon';
-import {ITodoItem, TodoData} from '../../entities/TodoItem';
 import {connect} from 'react-redux';
-import {ITodoItem} from '../../entities/TodoItem';
 import {IInitialStore} from '../../store/reducers/rootReducer';
 import {toggleStatus} from '../../store/actions';
+import {ITodoItem, TodoData} from '../../entities/TodoItem';
 
 const styles = StyleSheet.create({
   container: {
