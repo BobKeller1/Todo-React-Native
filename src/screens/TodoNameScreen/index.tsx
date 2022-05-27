@@ -7,7 +7,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import OutlineButton, { Colors } from "../../components/OutlineButton";
+import OutlineButton, {Colors} from '../../components/OutlineButton';
 import useAnimateKeyboardHeight from '../../hooks/useAnimateKeyboardHeight';
 import {useNavigation} from '@react-navigation/native';
 

@@ -1,10 +1,14 @@
-import React, { FC, useLayoutEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
-import DateTimePicker, { DateTimePickerEvent } from "@react-native-community/datetimepicker";
-import { RouteModalsProp } from "../HomeScreen";
-import OutlineButton, { Colors } from "../../components/OutlineButton";
-import { useNavigation } from "@react-navigation/native";
-import { formatToTimestamp } from "../../formatters/dateFormatters";
+import React, {Dispatch, FC, useLayoutEffect, useState} from 'react';
+import {Button, StyleSheet, Text, View} from 'react-native';
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
+import OutlineButton, {Colors} from '../../components/OutlineButton';
+import {RouteProp, useNavigation} from '@react-navigation/native';
+import {formatToTimestamp} from '../../formatters/dateFormatters';
+import {connect} from 'react-redux';
+import {addTodo} from '../../store/actions';
+import {TodoData} from '../../entities/TodoItem';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,18 +35,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
+interface ITodoDateScreenProp {
+  route: RouteProp<{params: {name: string; description: string}}, 'params'>;
+  addTask: (todo: TodoData) => void;
+}
+
+const TodoDateScreen: FC<ITodoDateScreenProp> = ({route, addTask}) => {
   const {name, description} = route.params;
   const [date, setDate] = useState<Date>(new Date(Date.now()));
   const navigation = useNavigation<any>();
-
-  const navigateToHome = () => {
-    navigation.navigate({
-      name: 'HomeScreen',
-      params: {post: todo},
-      merge: true,
-    });
-  };
 
   const todo = {
     title: name,
@@ -53,6 +54,12 @@ const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
 
   const onChange = (event: DateTimePickerEvent, selectedDate: Date | any) => {
     setDate(selectedDate);
+  };
+
+  const onPress = () => {
+    addTask(todo);
+    navigation.popToTop();
+    navigation.goBack();
   };
 
   useLayoutEffect(() => {
@@ -79,10 +86,18 @@ const TodoDateScreen: FC<RouteModalsProp> = ({route}) => {
         />
       </View>
       <View style={[styles.buttonContainer]}>
-        <OutlineButton onPress={navigateToHome} color={Colors.Green} />
+        <OutlineButton onPress={onPress} color={Colors.Green} />
       </View>
     </View>
   );
 };
 
-export default TodoDateScreen;
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+  return {
+    addTask: (todo: TodoData) => {
+      dispatch(addTodo(todo));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(TodoDateScreen);

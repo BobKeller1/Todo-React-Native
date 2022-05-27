@@ -1,16 +1,15 @@
 import React, {FC, useLayoutEffect, useState} from 'react';
 import {
-  View,
-  Text,
   Animated,
-  TextInput,
-  StyleSheet,
   Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
-import {RouteModalsProp} from '../HomeScreen';
 import OutlineButton, {Colors} from '../../components/OutlineButton';
 import useAnimateKeyboardHeight from '../../hooks/useAnimateKeyboardHeight';
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   container: {
@@ -36,7 +35,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const TodoDescriptionScreen: FC<RouteModalsProp> = ({route}) => {
+interface ITodoDescriptionScreenProp {
+  route: RouteProp<{params: {name: string}}, 'params'>;
+}
+
+const TodoDescriptionScreen: FC<ITodoDescriptionScreenProp> = ({route}) => {
   const {name} = route.params;
   const navigation = useNavigation<any>();
   const [description, setDescription] = useState('');
