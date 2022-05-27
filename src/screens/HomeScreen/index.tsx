@@ -7,11 +7,8 @@ import {
   RouteProp,
   useNavigation,
 } from '@react-navigation/native';
-import CustomIcon from '../../components/CustomIcon';
 import {connect} from 'react-redux';
-import {ITodoItem} from '../../entities/TodoItem';
 import {IInitialStore} from '../../store/reducers/rootReducer';
-import {toggleStatus} from '../../store/actions';
 import {ITodoItem, TodoData} from '../../entities/TodoItem';
 import {toggleStatus, undoTodo} from '../../store/actions';
 import CircleButtons from './components/CircleButtons';
@@ -108,17 +105,6 @@ const HomeScreen: FC<IHomeScreenProp> = ({
       ) : (
         <SectionedTodoList data={todo} onPress={toggleCompleted} />
       )}
-      {/*<View style={styles.buttonAddTaskContainer}>*/}
-      {/*  <TouchableOpacity*/}
-      {/*    style={styles.buttonAddTask}*/}
-      {/*    onPress={() => {*/}
-      {/*      navigation.navigate('ModalNavigator');*/}
-      {/*    }}>*/}
-      {/*    <View>*/}
-      {/*      <CustomIcon name={'plus'} size={20} color={'white'} />*/}
-      {/*    </View>*/}
-      {/*  </TouchableOpacity>*/}
-      {/*</View>*/}
       <CircleButtons
         right={20}
         borderColor={'#268CC7'}

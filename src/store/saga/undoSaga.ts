@@ -5,7 +5,7 @@ function* undoWorker(action) {
   const todoId = action.payload;
   yield put(showUndo());
 
-  const {undo, timeout} = yield race({
+  const {undo} = yield race({
     undo: take(action => action.type === ACTIONS.UNDO),
     timeout: delay(3000),
   });
@@ -13,8 +13,6 @@ function* undoWorker(action) {
 
   if (undo) {
     yield put(undoStatus(todoId));
-  } else if (timeout) {
-    //  ничего не делать
   }
 }
 
