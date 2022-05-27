@@ -58,9 +58,8 @@ const TodoDateScreen: FC<ITodoDateScreenProp> = ({route, addTask}) => {
 
   const onPress = () => {
     addTask(todo);
-    navigation.pop();
-    navigation.pop();
-    navigation.pop();
+    navigation.popToTop();
+    navigation.goBack();
   };
 
   useLayoutEffect(() => {
