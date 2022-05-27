@@ -1,13 +1,26 @@
-import React, {useLayoutEffect, useMemo, useState} from 'react';
-import {Button, StyleSheet, TextInput, View, SafeAreaView} from 'react-native';
+import React, {FC, useEffect, useLayoutEffect, useState} from 'react';
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
 import TodoList from './components/TodoList';
 import SectionedTodoList from './components/SectionedTodoList';
-import {ITodoItem} from '../../app/App';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+} from '@react-navigation/native';
+import CustomIcon from '../../components/CustomIcon';
+import {generateId} from '../../utils/generateId';
+import {ITodoItem, TodoData} from '../../entities/TodoItem';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -24,43 +37,76 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'rgba(250, 250, 250, 0.93);',
   },
+  buttonAddTaskContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    borderRadius: 100,
+    borderColor: '#268CC7',
+    backgroundColor: '#268CC7',
+    borderWidth: 1,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+  },
+  buttonAddTask: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderRadius: 100,
+    borderColor: '#268CC7',
+    backgroundColor: '#268CC7',
+    borderWidth: 1,
+  },
 });
 
-const HomeScreen = () => {
-  const data: ITodoItem[] = useMemo(
-    () => [
-      {
-        title: 'todo title 0',
-        description: 'description 0',
-        status: false,
-        date: '1652207435533',
-        id: '10',
-      },
-      {
-        title: 'todo title 0',
-        description: 'description 0',
-        status: false,
-        date: '1652207435533',
-        id: '11',
-      },
-      {
-        title: 'todo title 0',
-        description: 'description 0',
-        status: true,
-        date: '1652207435533',
-        id: '111',
-      },
-    ],
-    [],
-  );
+export interface RouteModalsProp {
+  route: RouteProp<
+    {params: {name: string; description: string; post: TodoData}},
+    'params'
+  >;
+}
+
+const data: ITodoItem[] = [
+  {
+    title: 'todo title 1',
+    description: 'description 0',
+    status: true,
+    date: '1652207435533',
+    id: '11',
+  },
+
+  {
+    title: 'todo title 5',
+    description: 'description 0',
+    status: false,
+    date: '1672207435533',
+    id: '14',
+  },
+  {
+    title: 'todo title 6',
+    description: 'description 0',
+    status: true,
+    date: '1652207435533',
+    id: '15',
+  },
+];
+
+const HomeScreen: FC<RouteModalsProp> = ({route}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [todos, setTodos] = useState(data);
 
   const setComletedHandler = (todoId: string) => {
-    const index = data.findIndex(todo => todo.id === todoId);
+    const index = todos.findIndex(todo => todo.id === todoId);
     const todoList = [...todos];
     todoList[index].status = !todoList[index].status;
     setTodos(todoList);
+  };
+
+  const addTodo = (todo: TodoData) => {
+    const id = generateId();
+    const newTodo = {...todo, id};
+    setTodos([...todos, newTodo]);
   };
 
   const navigation = useNavigation<NavigationProp<any>>();
@@ -69,13 +115,14 @@ const HomeScreen = () => {
     navigation.setOptions({title: 'Главный экран'});
   }, [navigation]);
 
+  useEffect(() => {
+    if (route.params?.post) {
+      addTodo(route.params?.post);
+    }
+  }, [route.params?.post]);
+
   return (
     <SafeAreaView style={styles.container}>
-      <Button
-        title={'Open modal'}
-        onPress={() => navigation.navigate('Modal')}
-      />
-
       <View style={styles.inputContainer}>
         <TextInput
           value={searchQuery}
@@ -93,6 +140,15 @@ const HomeScreen = () => {
       ) : (
         <SectionedTodoList data={todos} onPress={setComletedHandler} />
       )}
+      <View style={styles.buttonAddTaskContainer}>
+        <TouchableOpacity
+          style={styles.buttonAddTask}
+          onPress={() => {
+            navigation.navigate('ModalNavigator', {screen: 'TodoNameScreen'});
+          }}>
+          <CustomIcon name={'plus'} size={20} color={'white'} />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };

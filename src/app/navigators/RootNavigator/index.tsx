@@ -13,14 +13,12 @@ const RootNavigator = () => {
         options={{headerShown: false}}
       />
       <RootStack.Screen
-        options={{
-          presentation: 'modal',
-          headerStyle: {
-            backgroundColor: '#beb9b9',
-          },
-        }}
-        name="Modal"
+        name="ModalNavigator"
         component={ModalNavigator}
+        options={{
+          headerShown: false,
+          presentation: 'modal',
+        }}
       />
     </RootStack.Navigator>
   );
