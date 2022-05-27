@@ -7,9 +7,12 @@ import {
   RouteProp,
   useNavigation,
 } from '@react-navigation/native';
+import CustomIcon from '../../components/CustomIcon';
 import {connect} from 'react-redux';
 import {ITodoItem} from '../../entities/TodoItem';
 import {IInitialStore} from '../../store/reducers/rootReducer';
+import {toggleStatus} from '../../store/actions';
+import {ITodoItem, TodoData} from '../../entities/TodoItem';
 import {toggleStatus, undoTodo} from '../../store/actions';
 import CircleButtons from './components/CircleButtons';
 
@@ -57,7 +60,7 @@ const styles = StyleSheet.create({
 
 export interface IHomeScreenProp {
   route: RouteProp<
-    {params: {name: string; description: string; post: ITodoItem}},
+    {params: {name: string; description: string; post: TodoData}},
     'params'
   >;
   todo: ITodoItem[];

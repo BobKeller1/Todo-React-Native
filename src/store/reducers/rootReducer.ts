@@ -54,8 +54,9 @@ const rootReducer = (state = initialState, action: IActions) => {
       todoList[index].status = !todoList[index].status;
       return {...state, todo: todoList};
     case ACTIONS.ADD_TODO:
-      const todo = generateId(action.payload);
-      return {...state, todo: [...state.todo, todo]};
+      const {id} = generateId();
+      const newTodo = {...action.payload, id};
+      return {...state, todo: [...state.todo, newTodo]};
     case ACTIONS.SHOW_UNDO:
       return {...state, undo: {isShow: true}};
     case ACTIONS.HIDE_UNDO:

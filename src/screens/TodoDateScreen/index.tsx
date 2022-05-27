@@ -8,6 +8,7 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 import {formatToTimestamp} from '../../formatters/dateFormatters';
 import {connect} from 'react-redux';
 import {addTodo} from '../../store/actions';
+import {TodoData} from '../../entities/TodoItem';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,21 +30,14 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    right: 120,
-    bottom: 100,
+    right: 30,
+    bottom: 70,
   },
 });
 
-export interface ITaskItem {
-  title: string;
-  description: string;
-  status: boolean;
-  date: string;
-}
-
 interface ITodoDateScreenProp {
   route: RouteProp<{params: {name: string; description: string}}, 'params'>;
-  addTask: (todo: ITaskItem) => void;
+  addTask: (todo: TodoData) => void;
 }
 
 const TodoDateScreen: FC<ITodoDateScreenProp> = ({route, addTask}) => {
@@ -64,11 +58,9 @@ const TodoDateScreen: FC<ITodoDateScreenProp> = ({route, addTask}) => {
 
   const onPress = () => {
     addTask(todo);
-    navigation.navigate({
-      name: 'HomeScreen',
-      params: {post: todo},
-      merge: true,
-    });
+    navigation.pop();
+    navigation.pop();
+    navigation.pop();
   };
 
   useLayoutEffect(() => {
@@ -103,7 +95,7 @@ const TodoDateScreen: FC<ITodoDateScreenProp> = ({route, addTask}) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
-    addTask: (todo: ITaskItem) => {
+    addTask: (todo: TodoData) => {
       dispatch(addTodo(todo));
     },
   };

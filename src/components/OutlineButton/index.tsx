@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
   buttonNext: {
     flexDirection: 'row',
     justifyContent: 'center',
-    position: 'absolute',
     paddingVertical: 15,
     paddingHorizontal: 35,
     borderRadius: 100,
@@ -24,7 +23,6 @@ export enum Colors {
 }
 
 interface ButtonModalProp {
-  isKeyboardAware?: boolean;
   isValid?: boolean;
   onPress: () => void;
   color: Colors;
@@ -32,20 +30,20 @@ interface ButtonModalProp {
 
 const OutlineButton: FC<ButtonModalProp> = ({isValid, onPress, color}) => {
   const colors = {
-    primary: '#268CC7',
-    disabled: 'gray',
-    green: 'green',
+    [Colors.Primary]: '#268CC7',
+    [Colors.Disabled]: 'gray',
+    [Colors.Green]: 'green',
   };
 
   return (
     <TouchableOpacity
       disabled={isValid}
       onPress={onPress}
-      style={[
-        styles.buttonNext,
-        isValid && styles.buttonNextDisabled,
-        !isValid && {borderColor: colors[color]},
-      ]}>
+      style={
+        isValid
+          ? [styles.buttonNext, {borderColor: colors.disabled}]
+          : [styles.buttonNext, {borderColor: colors[color]}]
+      }>
       <CustomIcon
         name={'arrow-right2'}
         size={18}

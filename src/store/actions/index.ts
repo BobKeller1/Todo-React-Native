@@ -1,4 +1,4 @@
-import {ITaskItem} from '../../screens/TodoDateScreen';
+import {TodoData} from '../../entities/TodoItem';
 
 const prefix = 'TODO';
 
@@ -11,7 +11,7 @@ const ACTIONS = {
   UNDO_STATUS: `${prefix}/UNDO_STATUS`,
 };
 
-export const addTodo = (payload: ITaskItem) => ({
+export const addTodo = (payload: TodoData) => ({
   type: ACTIONS.ADD_TODO,
   payload,
 });
