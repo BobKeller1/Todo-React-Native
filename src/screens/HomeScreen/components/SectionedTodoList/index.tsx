@@ -1,10 +1,10 @@
 import React, {FC, useCallback, useMemo} from 'react';
 import {ListRenderItem, StyleSheet, Text, View} from 'react-native';
 import {dateFormatter} from '../../../../formatters/dateFormatters';
-import TodoItem from '../../../../entities/TodoItem';
+import TodoItem from '../../../../components/TodoItem';
 import {groupBy} from '../../../../utils/arrayUtils';
 import {KeyboardAwareSectionList} from 'react-native-keyboard-aware-scroll-view';
-import {ITodoItem} from '../../../../store/reducers/rootReducer';
+import {ITodoItem} from '../../../../entities/TodoItem';
 
 const styles = StyleSheet.create({
   container: {

@@ -15,9 +15,9 @@ import {
 } from '@react-navigation/native';
 import CustomIcon from '../../components/CustomIcon';
 import {connect} from 'react-redux';
-import {ITodoItem} from '../../entities/TodoItem';
 import {IInitialStore} from '../../store/reducers/rootReducer';
 import {toggleStatus} from '../../store/actions';
+import {ITodoItem, TodoData} from '../../entities/TodoItem';
 
 const styles = StyleSheet.create({
   container: {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
 
 export interface IHomeScreenProp {
   route: RouteProp<
-    {params: {name: string; description: string; post: ITodoItem}},
+    {params: {name: string; description: string; post: TodoData}},
     'params'
   >;
   todo: ITodoItem[];
@@ -104,9 +104,7 @@ const HomeScreen: FC<IHomeScreenProp> = ({todo, toggleCompleted}) => {
           onPress={() => {
             navigation.navigate('ModalNavigator');
           }}>
-          <View>
-            <CustomIcon name={'plus'} size={20} color={'white'} />
-          </View>
+          <CustomIcon name={'plus'} size={20} color={'white'} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>

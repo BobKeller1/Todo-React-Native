@@ -19,7 +19,9 @@ const SettingsScreen = () => {
     <View style={styles.container}>
       <Button
         title={'Open modal'}
-        onPress={() => navigation.navigate('Modal')}
+        onPress={() =>
+          navigation.navigate('ModalNavigator', {screen: 'TodoModalName'})
+        }
       />
       <Text>Настройки</Text>
     </View>

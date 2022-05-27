@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    right: 120,
+    right: 30,
   },
 });
 
@@ -40,7 +40,7 @@ const TodoNameScreen = () => {
   const navigation = useNavigation<any>();
   const isValid = name.length === 0;
 
-  const buttonAnim = useAnimateKeyboardHeight(false, 300, 100, 50);
+  const buttonAnim = useAnimateKeyboardHeight(false, 300, 70, 60);
 
   const navigateToDescription = () => {
     navigation.push('ScreenDescription', {
