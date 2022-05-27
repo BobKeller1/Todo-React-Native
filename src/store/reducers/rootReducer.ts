@@ -47,28 +47,23 @@ const initialState: IInitialStore = {
 const rootReducer = (state = initialState, action: IActions) => {
   switch (action.type) {
     case ACTIONS.TOGGLE_STATUS:
+      console.log(action.payload);
       const index = state.todo.findIndex(
-        todoItem => todoItem.id === action.payload,
+        todoItem => todoItem.id === action.payload.id,
       );
       const todoList = [...state.todo];
       todoList[index].status = !todoList[index].status;
-      return {...state, todo: todoList};
+      return {
+        ...state,
+        todo: todoList,
+        undo: {isShow: action.payload.isCanselable},
+      };
     case ACTIONS.ADD_TODO:
       const {id} = generateId();
       const newTodo = {...action.payload, id};
       return {...state, todo: [...state.todo, newTodo]};
-    case ACTIONS.SHOW_UNDO:
-      return {...state, undo: {isShow: true}};
     case ACTIONS.HIDE_UNDO:
       return {...state, undo: {isShow: false}};
-    case ACTIONS.UNDO_STATUS: {
-      const i = state.todo.findIndex(
-        todoItem => todoItem.id === action.payload,
-      );
-      const list = [...state.todo];
-      list[i].status = !list[i].status;
-      return {...state, todo: list};
-    }
     default:
       return state;
   }

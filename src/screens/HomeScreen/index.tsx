@@ -61,7 +61,7 @@ export interface IHomeScreenProp {
     'params'
   >;
   todo: ITodoItem[];
-  toggleCompleted: (id: string) => void;
+  toggleCompleted: (payload: string) => void;
   undo: {
     isShow: boolean;
   };
@@ -133,7 +133,7 @@ const mapStateToProps = (state: IInitialStore) => {
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
     toggleCompleted: (id: string) => {
-      dispatch(toggleStatus(id));
+      dispatch(toggleStatus({id: id, isCanselable: true}));
     },
     undoTask: () => {
       dispatch(undoTodo());

@@ -1,18 +1,18 @@
-import {put, delay, takeLatest, race, take} from 'redux-saga/effects';
-import ACTIONS, {hideUndo, showUndo, undoStatus} from '../actions';
+import {put, delay, takeLatest, race, take, cancel} from 'redux-saga/effects';
+import ACTIONS, {hideUndo, toggleStatus} from '../actions';
 
-function* undoWorker(action) {
-  const todoId = action.payload;
-  yield put(showUndo());
-
+function* undoWorker({payload: {isCanselable, id}}) {
+  if (!isCanselable) {
+    yield cancel();
+  }
   const {undo} = yield race({
-    undo: take(action => action.type === ACTIONS.UNDO),
+    undo: take(ACTIONS.UNDO),
     timeout: delay(3000),
   });
-  yield put(hideUndo());
-
   if (undo) {
-    yield put(undoStatus(todoId));
+    yield put(toggleStatus({id, isCanselable: false}));
+  } else {
+    yield put(hideUndo());
   }
 }
 
