@@ -29,7 +29,13 @@ const useAnimateKeyboardHeight = (
     } else {
       animatePosition(initialHeight);
     }
-  }, [heightWithKeyboard, indent, initialHeight, keyBoardHeight]);
+  }, [
+    heightWithKeyboard,
+    indent,
+    initialHeight,
+    keyBoardHeight,
+    animatePosition,
+  ]);
 
   return buttonAnim;
 };

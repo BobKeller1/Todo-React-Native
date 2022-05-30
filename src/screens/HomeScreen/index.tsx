@@ -1,11 +1,5 @@
 import React, {Dispatch, FC, useLayoutEffect, useState} from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, TextInput, View, SafeAreaView} from 'react-native';
 import TodoList from './components/TodoList';
 import SectionedTodoList from './components/SectionedTodoList';
 import {
@@ -13,11 +7,11 @@ import {
   RouteProp,
   useNavigation,
 } from '@react-navigation/native';
-import CustomIcon from '../../components/CustomIcon';
 import {connect} from 'react-redux';
 import {IInitialStore} from '../../store/reducers/rootReducer';
-import {toggleStatus} from '../../store/actions';
 import {ITodoItem, TodoData} from '../../entities/TodoItem';
+import {toggleStatus, undoTodo} from '../../store/actions';
+import CircleButton from '../../components/CircleButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -67,13 +61,26 @@ export interface IHomeScreenProp {
     'params'
   >;
   todo: ITodoItem[];
-  toggleCompleted: (id: string) => void;
+  toggleCompleted: (payload: string) => void;
+  undo: {
+    isShow: boolean;
+  };
   addTask: (todo: ITodoItem) => void;
+  undoTask: () => void;
 }
 
-const HomeScreen: FC<IHomeScreenProp> = ({todo, toggleCompleted}) => {
+const HomeScreen: FC<IHomeScreenProp> = ({
+  todo,
+  toggleCompleted,
+  undo,
+  undoTask,
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation<NavigationProp<any>>();
+  const {isShow} = undo;
+  const onPressUndo = () => undoTask();
+  const toCreateTodo = () =>
+    navigation.navigate('ModalNavigator', {screen: 'TodoNameScreen'});
 
   useLayoutEffect(() => {
     navigation.setOptions({title: 'Главный экран'});
@@ -98,28 +105,38 @@ const HomeScreen: FC<IHomeScreenProp> = ({todo, toggleCompleted}) => {
       ) : (
         <SectionedTodoList data={todo} onPress={toggleCompleted} />
       )}
-      <View style={styles.buttonAddTaskContainer}>
-        <TouchableOpacity
-          style={styles.buttonAddTask}
-          onPress={() => {
-            navigation.navigate('ModalNavigator');
-          }}>
-          <CustomIcon name={'plus'} size={20} color={'white'} />
-        </TouchableOpacity>
-      </View>
+      <CircleButton
+        right={20}
+        borderColor={'#268CC7'}
+        backgroundColor={'#268CC7'}
+        icon={'plus'}
+        onPress={toCreateTodo}
+      />
+      {isShow && (
+        <CircleButton
+          right={310}
+          borderColor={'black'}
+          backgroundColor={'black'}
+          icon={'undo2'}
+          onPress={onPressUndo}
+        />
+      )}
     </SafeAreaView>
   );
 };
 
 const mapStateToProps = (state: IInitialStore) => {
-  const {todo} = state;
-  return {todo};
+  const {todo, undo} = state;
+  return {todo, undo};
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<any>) => {
   return {
     toggleCompleted: (id: string) => {
-      dispatch(toggleStatus(id));
+      dispatch(toggleStatus({id: id, isCanselable: true}));
+    },
+    undoTask: () => {
+      dispatch(undoTodo());
     },
   };
 };

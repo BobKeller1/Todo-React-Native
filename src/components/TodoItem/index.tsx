@@ -8,14 +8,6 @@ interface TodoItemProps {
   onPress: () => void;
 }
 
-export interface ITodoItem {
-  title: string;
-  description: string;
-  date: string;
-  id: string;
-  status: boolean;
-}
-
 const TodoItem: FC<TodoItemProps> = ({item, onPress}) => {
   const {status, description, title, date} = item;
   const formattedDate = dateFormatter(date);

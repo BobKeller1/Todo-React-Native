@@ -85,7 +85,7 @@ const TodoDateScreen: FC<ITodoDateScreenProp> = ({route, addTask}) => {
           style={styles.timePicker}
         />
       </View>
-      <View style={[styles.buttonContainer]}>
+      <View style={styles.buttonContainer}>
         <OutlineButton onPress={onPress} color={Colors.Green} />
       </View>
     </View>
