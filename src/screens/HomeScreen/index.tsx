@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 import {IInitialStore} from '../../store/reducers/rootReducer';
 import {ITodoItem, TodoData} from '../../entities/TodoItem';
 import {toggleStatus, undoTodo} from '../../store/actions';
-import CircleButtons from './components/CircleButtons';
+import CircleButton from '../../components/CircleButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -105,7 +105,7 @@ const HomeScreen: FC<IHomeScreenProp> = ({
       ) : (
         <SectionedTodoList data={todo} onPress={toggleCompleted} />
       )}
-      <CircleButtons
+      <CircleButton
         right={20}
         borderColor={'#268CC7'}
         backgroundColor={'#268CC7'}
@@ -113,7 +113,7 @@ const HomeScreen: FC<IHomeScreenProp> = ({
         onPress={toCreateTodo}
       />
       {isShow && (
-        <CircleButtons
+        <CircleButton
           right={310}
           borderColor={'black'}
           backgroundColor={'black'}

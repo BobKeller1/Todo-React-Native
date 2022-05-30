@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import CustomIcon from '../../../../components/CustomIcon';
+import CustomIcon from '../CustomIcon';
 
 const styles = StyleSheet.create({
   buttonContainer: {
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
 });
 
-interface ICircleButtonsProp {
+interface ICircleButtonProp {
   right: number;
   borderColor: string;
   backgroundColor: string;
@@ -41,7 +41,7 @@ interface ICircleButtonsProp {
   onPress: () => void;
 }
 
-const Circlebuttons: FC<ICircleButtonsProp> = ({
+const CircleButton: FC<ICircleButtonProp> = ({
   right,
   borderColor,
   backgroundColor,
@@ -81,4 +81,4 @@ const Circlebuttons: FC<ICircleButtonsProp> = ({
   );
 };
 
-export default Circlebuttons;
+export default CircleButton;
