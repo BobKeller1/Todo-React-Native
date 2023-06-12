@@ -47,7 +47,6 @@ const initialState: IInitialStore = {
 const rootReducer = (state = initialState, action: IActions) => {
   switch (action.type) {
     case ACTIONS.TOGGLE_STATUS:
-      console.log(action.payload);
       const index = state.todo.findIndex(
         todoItem => todoItem.id === action.payload.id,
       );
